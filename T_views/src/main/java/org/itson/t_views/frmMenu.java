@@ -4,12 +4,18 @@
  */
 package org.itson.t_views;
 
+import com.itson.t_modelview.facade.FachadaViewModel;
+import com.itson.t_modelview.interfaces.IFachadaViewModel;
 import java.awt.Color;
 import java.awt.Font;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
+import org.itson.dominio.Jugador;
+import org.itson.dominio.Sala;
 import org.jdesktop.swingx.prompt.PromptSupport;
 
 /**
@@ -20,9 +26,11 @@ public class frmMenu extends javax.swing.JFrame {
 
     // Instancia única del Singleton
     private static frmMenu instance = null;
+    private final IFachadaViewModel fachadaViewModel;
 
     // Constructor privado para evitar instanciación directa
-    public frmMenu() {
+    private frmMenu() {
+        this.fachadaViewModel = new FachadaViewModel();
         initComponents();
         validarTamanioNombre();
         configurarPaneles();
@@ -153,6 +161,11 @@ public class frmMenu extends javax.swing.JFrame {
 
         txtUsuario.setFont(new java.awt.Font("Segoe UI Semibold", 0, 24)); // NOI18N
         txtUsuario.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        txtUsuario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtUsuarioActionPerformed(evt);
+            }
+        });
         txtUsuario.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 txtUsuarioKeyReleased(evt);
@@ -254,7 +267,11 @@ public class frmMenu extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCrearMouseReleased
 
     private void btnCrearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearActionPerformed
-        crearSala();
+        try {
+            crearSala();
+        } catch (Exception ex) {
+            Logger.getLogger(frmMenu.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_btnCrearActionPerformed
 
     private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
@@ -284,6 +301,10 @@ public class frmMenu extends javax.swing.JFrame {
     private void txtUsuarioKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtUsuarioKeyReleased
         validarTamanioNombre();
     }//GEN-LAST:event_txtUsuarioKeyReleased
+
+    private void txtUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtUsuarioActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtUsuarioActionPerformed
 
     private void validarTamanioNombre() {
         if (txtUsuario.getText().length() >= 3 && !txtUsuario.getText().isBlank()) {
@@ -347,22 +368,24 @@ public class frmMenu extends javax.swing.JFrame {
         PromptSupport.init("Ingresa tu nombre", Color.LIGHT_GRAY, Color.WHITE, txtUsuario);
         PromptSupport.setFocusBehavior(PromptSupport.FocusBehavior.SHOW_PROMPT, txtUsuario);
     }
-    
-    private void crearSala(){
+
+    private void crearSala() throws Exception {
         String nombreJugador = txtUsuario.getText();
         int cantidadJugadores = preguntarTamanioSala();
-
+        Jugador jugador = new Jugador();
+        jugador.setNombre(nombreJugador);
         if (cantidadJugadores != JOptionPane.CLOSED_OPTION) {
-            frmSala frame = frmSala.getInstance();
-            frame.setNombre(nombreJugador);
-            frame.setCodigo(null);
-            frame.actualizarVentana();
-            frame.setVisible(true);
-            dispose();
+            Sala sala = new Sala(cantidadJugadores, jugador);
+            fachadaViewModel.crearSala(sala);
+            //sala2 = viewModel(Sala)
+            //viewMode - Model(Sala)
+            //Model crearSala(viewModelSala)
+            //
+
         }
     }
-    
-    private void unirseSala(){
+
+    private void unirseSala() {
         String nombreJugador = txtUsuario.getText();
         String codigoSala = preguntarCodigoSala();
 

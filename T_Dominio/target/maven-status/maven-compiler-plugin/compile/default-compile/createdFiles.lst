@@ -1,0 +1,12 @@
+org\itson\dominio\Posicion.class
+org\itson\model\interfaces\IFachadaModel.class
+org\itson\dominio\Tablero.class
+org\itson\dominio\Sala.class
+org\itson\model\ModelSala.class
+org\itson\model\factory\ModelFactory.class
+org\itson\dominio\Juego.class
+org\itson\dominio\Jugador.class
+org\itson\dominio\Linea.class
+org\itson\model\facade\FachadaModel.class
+org\itson\model\interfaces\IModelSala.class
+org\itson\dominio\Cuadro.class

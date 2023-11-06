@@ -10,33 +10,38 @@ package org.itson.dominio;
  */
 public class Sala {
 
-    private Tablero tablero;
-    private Juego juego;
     private String codigo;
+    private int cantidadJugadores;
+    private Jugador jugador;
 
     public Sala() {
     }
 
-    public Sala(Tablero tablero, Juego juego, String codigo) {
-        this.tablero = tablero;
-        this.juego = juego;
+    public Sala(String codigo, int cantidadJugadores, Jugador jugador) {
         this.codigo = codigo;
+        this.cantidadJugadores = cantidadJugadores;
+        this.jugador = jugador;
     }
 
-    public Tablero getTablero() {
-        return tablero;
+    public Sala(int cantidadJugadores, Jugador jugador) {
+        this.cantidadJugadores = cantidadJugadores;
+        this.jugador = jugador;
     }
 
-    public void setTablero(Tablero tablero) {
-        this.tablero = tablero;
+    public int getCantidadJugadores() {
+        return cantidadJugadores;
     }
 
-    public Juego getJuego() {
-        return juego;
+    public void setCantidadJugadores(int cantidadJugadores) {
+        this.cantidadJugadores = cantidadJugadores;
     }
 
-    public void setJuego(Juego juego) {
-        this.juego = juego;
+    public Jugador getJugador() {
+        return jugador;
+    }
+
+    public void setJugador(Jugador jugador) {
+        this.jugador = jugador;
     }
 
     public String getCodigo() {
@@ -49,7 +54,7 @@ public class Sala {
 
     @Override
     public String toString() {
-        return "Sala{" + "tablero=" + tablero + ", juego=" + juego + ", codigo=" + codigo + '}';
+        return "Sala{" + "codigo=" + codigo + ", cantidadJugadores=" + cantidadJugadores + ", jugador=" + jugador + '}';
     }
 
 }

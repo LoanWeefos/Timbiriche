@@ -1,0 +1,5 @@
+com\itson\t_modelview\interfaces\IFachadaViewModel.class
+com\itson\t_modelview\interfaces\IViewModelSala.class
+com\itson\t_modelview\facade\FachadaViewModel.class
+com\itson\t_modelview\factory\ViewModelFactory.class
+com\itson\t_modelview\ViewModelSala.class
