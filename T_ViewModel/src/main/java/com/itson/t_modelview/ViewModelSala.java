@@ -44,6 +44,7 @@ public class ViewModelSala implements IViewModelSala {
             frmMenu frameM = frmMenu.getInstance();
             frmSala.setNombre(sala.getJugador().getNombre());
             frmSala.setCodigo(sala.getCodigo());
+            frmSala.setCantJugadores(sala.getCantidadJugadores());
             frame.actualizarVentana();
             frame.setVisible(true);
             frameM.dispose();

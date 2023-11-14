@@ -327,8 +327,8 @@ public class frmMenu extends javax.swing.JFrame {
 
     private int preguntarTamanioSala() {
         Icon icono = new ImageIcon(getClass().getClassLoader().getResource("lulu.png"));
-        Object[] opciones = {"2", "3", "4"};
-        return JOptionPane.showOptionDialog(
+        Object[] opciones = {2, 3, 4};
+        int jugadores = JOptionPane.showOptionDialog(
                 null,
                 "Seleccione la cantidad de jugadores:",
                 "Crear sala",
@@ -338,6 +338,11 @@ public class frmMenu extends javax.swing.JFrame {
                 opciones,
                 JOptionPane.CLOSED_OPTION
         );
+        if (jugadores >= 0) {
+            return (int) opciones[jugadores];
+        } else {
+            return 0;
+        }
     }
 
     private String preguntarCodigoSala() {
