@@ -4,19 +4,41 @@
  */
 package org.itson.t_views;
 
+import com.itson.t_modelview.facade.FachadaViewModel;
+import com.itson.t_modelview.interfaces.IFachadaViewModel;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  *
  * @author wikit
  */
 public class frmJuego20x20 extends javax.swing.JFrame {
 
+    private static frmJuego20x20 instance = null;
+    private final IFachadaViewModel fachadaViewModel;
+    private String nombreJugador;
+
     /**
      * Creates new form frmJuego
      */
-    public frmJuego20x20() {
+    private frmJuego20x20() {
+        this.fachadaViewModel = new FachadaViewModel();
         initComponents();
+        actualizarVentana();
     }
 
+    public static frmJuego20x20 getInstance() {
+        if (instance == null) {
+            instance = new frmJuego20x20();
+        }
+        return instance;
+    }
+
+    public void actualizarVentana(){
+        lblJugador1.setText(nombreJugador);
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -307,9 +329,11 @@ public class frmJuego20x20 extends javax.swing.JFrame {
     }//GEN-LAST:event_btnSalirActionPerformed
 
     private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
-        frmMenu frame = frmMenu.getInstance();
-        frame.setVisible(true);
-        dispose();
+        try {
+            fachadaViewModel.cambiarJuegoSala(this);
+        } catch (Exception ex) {
+            Logger.getLogger(frmJuego10x10.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_btnRegresarActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -333,4 +357,12 @@ public class frmJuego20x20 extends javax.swing.JFrame {
     private javax.swing.JPanel pnlSala;
     private javax.swing.JPanel pnlTablero;
     // End of variables declaration//GEN-END:variables
+
+    public String getNombreJugador() {
+        return nombreJugador;
+    }
+
+    public void setNombreJugador(String nombreJugador) {
+        this.nombreJugador = nombreJugador;
+    }
 }

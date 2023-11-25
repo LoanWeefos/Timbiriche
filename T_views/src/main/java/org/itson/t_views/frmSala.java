@@ -4,8 +4,12 @@
  */
 package org.itson.t_views;
 
+import com.itson.t_modelview.facade.FachadaViewModel;
+import com.itson.t_modelview.interfaces.IFachadaViewModel;
 import java.awt.Color;
 import java.awt.Font;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.UIManager;
 
@@ -20,7 +24,10 @@ public class frmSala extends javax.swing.JFrame {
     private static String codigo;
     private static String nombre;
     private static int cantJugadores;
+    private String[] iconos;
     private int indice;
+
+    private final IFachadaViewModel fachadaViewModel;
 
     public static String getCodigo() {
         return codigo;
@@ -48,6 +55,7 @@ public class frmSala extends javax.swing.JFrame {
 
     // Constructor privado para evitar instanciación directa
     private frmSala() {
+        this.fachadaViewModel = new FachadaViewModel();
         initComponents();
         configurarPaneles();
         actualizarVentana();
@@ -480,23 +488,12 @@ public class frmSala extends javax.swing.JFrame {
     }//GEN-LAST:event_btnIniciarMouseReleased
 
     private void btnIniciarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIniciarActionPerformed
-        switch (cantJugadores) {
-            case 2 -> {
-                frmJuego10x10 frm = new frmJuego10x10();
-                frm.setVisible(true);
-            }
-            case 3 -> {
-                frmJuego20x20 frm = new frmJuego20x20();
-                frm.setVisible(true);
-            }
-            case 4 -> {
-                frmJuego40x40 frm = new frmJuego40x40();
-                frm.setVisible(true);
-            }
-            default ->
-                throw new AssertionError();
+        try {
+            mandarIconos();
+            fachadaViewModel.cambiarTablero(cantJugadores, iconos);
+        } catch (Exception ex) {
+            Logger.getLogger(frmSala.class.getName()).log(Level.SEVERE, null, ex);
         }
-        this.dispose();
     }//GEN-LAST:event_btnIniciarActionPerformed
 
     private void btnDerMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnDerMousePressed
@@ -555,23 +552,51 @@ public class frmSala extends javax.swing.JFrame {
     }
 
     private void mostrarImagen() {
+        mandarIconos();
         if (indice < 0) {
             indice = obtenerImagenes().length - 1;
         } else if (indice >= obtenerImagenes().length) {
             indice = 0;
         }
 
-        ImageIcon imagen = obtenerImagenes()[indice];
+        ImageIcon imagen = new ImageIcon(getClass().getClassLoader().getResource(obtenerImagenes()[indice]));
 
         lblIcon1.setIcon(imagen);
+        iconos[0] = obtenerImagenes()[indice];
     }
 
-    private ImageIcon[] obtenerImagenes() {
-        return new ImageIcon[]{
-            new ImageIcon(getClass().getClassLoader().getResource("lulu.png")),
-            new ImageIcon(getClass().getClassLoader().getResource("lulu2.png")),
-            new ImageIcon(getClass().getClassLoader().getResource("tyrael.png")),
-            new ImageIcon(getClass().getClassLoader().getResource("tyrael2.png")),};
+    private void mandarIconos() {
+        iconos = new String[cantJugadores];
+
+        iconos[0] = obtenerNombreImagen(lblIcon1);
+        iconos[1] = obtenerNombreImagen(lblIcon2);
+
+        if (cantJugadores > 2) {
+            iconos[2] = obtenerNombreImagen(lblIcon3);
+        }
+
+        if (cantJugadores == 4) {
+            iconos[3] = obtenerNombreImagen(lblIcon4);
+        }
+    }
+
+    private String obtenerNombreImagen(javax.swing.JLabel label) {
+        ImageIcon icono = (ImageIcon) label.getIcon();
+
+        String nombreImagen = null;
+        if (icono != null) {
+            String ruta = icono.getDescription();
+            int index = ruta.lastIndexOf("/");
+            if (index >= 0) {
+                nombreImagen = ruta.substring(index + 1);
+            }
+        }
+
+        return nombreImagen;
+    }
+
+    private String[] obtenerImagenes() {
+        return new String[]{"lulu.png", "lulu2.png", "tyrael.png", "tyrael2.png"};
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

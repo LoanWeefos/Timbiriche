@@ -4,7 +4,11 @@
  */
 package com.itson.t_modelview.interfaces;
 
+import javax.swing.JFrame;
+import org.itson.dominio.Cuadro;
+import org.itson.dominio.Juego;
 import org.itson.dominio.Sala;
+import org.itson.dominio.Tablero;
 
 /**
  *
@@ -12,5 +16,14 @@ import org.itson.dominio.Sala;
  */
 public interface IFachadaViewModel {
     
-    Sala crearSala(Sala sala) throws Exception;
+    Sala crearSala(String nombreJugador, int cantidadJugadores) throws Exception;
+    void cambiarInicioMenu() throws Exception;
+    void cambiarMenuInicio() throws Exception;
+    void cambiarSalaMenu() throws Exception;
+    void cambiarTablero(int cantJugadores, String[] iconos) throws Exception;
+    void cambiarJuegoSala(JFrame tablero) throws Exception;
+    Tablero crearTablero(int dimension) throws Exception;
+    void asignarLineaACuadro(int fila, int columna, String orientacion, int turno) throws Exception;
+    Juego crearJuego(String[][] jugadores) throws Exception;
+    Cuadro[][] getCuadros() throws Exception;
 }

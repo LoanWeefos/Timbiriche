@@ -14,8 +14,6 @@ import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
-import org.itson.dominio.Jugador;
-import org.itson.dominio.Sala;
 import org.jdesktop.swingx.prompt.PromptSupport;
 
 /**
@@ -161,11 +159,6 @@ public class frmMenu extends javax.swing.JFrame {
 
         txtUsuario.setFont(new java.awt.Font("Segoe UI Semibold", 0, 24)); // NOI18N
         txtUsuario.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        txtUsuario.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtUsuarioActionPerformed(evt);
-            }
-        });
         txtUsuario.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 txtUsuarioKeyReleased(evt);
@@ -275,9 +268,11 @@ public class frmMenu extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCrearActionPerformed
 
     private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
-        frmInicio frame = frmInicio.getInstance();
-        frame.setVisible(true);
-        dispose();
+        try {
+            fachadaViewModel.cambiarMenuInicio();
+        } catch (Exception ex) {
+            Logger.getLogger(frmMenu.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_btnRegresarActionPerformed
 
     private void btnUnirseMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnUnirseMousePressed
@@ -301,10 +296,6 @@ public class frmMenu extends javax.swing.JFrame {
     private void txtUsuarioKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtUsuarioKeyReleased
         validarTamanioNombre();
     }//GEN-LAST:event_txtUsuarioKeyReleased
-
-    private void txtUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtUsuarioActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtUsuarioActionPerformed
 
     private void validarTamanioNombre() {
         if (txtUsuario.getText().length() >= 3 && !txtUsuario.getText().isBlank()) {
@@ -377,16 +368,8 @@ public class frmMenu extends javax.swing.JFrame {
     private void crearSala() throws Exception {
         String nombreJugador = txtUsuario.getText();
         int cantidadJugadores = preguntarTamanioSala();
-        Jugador jugador = new Jugador();
-        jugador.setNombre(nombreJugador);
         if (cantidadJugadores != JOptionPane.CLOSED_OPTION) {
-            Sala sala = new Sala(cantidadJugadores, jugador);
-            fachadaViewModel.crearSala(sala);
-            //sala2 = viewModel(Sala)
-            //viewMode - Model(Sala)
-            //Model crearSala(viewModelSala)
-            //
-
+            fachadaViewModel.crearSala(nombreJugador, cantidadJugadores);
         }
     }
 

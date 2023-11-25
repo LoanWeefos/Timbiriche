@@ -11,6 +11,5 @@ import org.itson.dominio.Sala;
  * @author ildex
  */
 public interface IModelSala {
-
-    Sala crearSala(Sala sala) throws Exception;
+    Sala crearSala(int cantidadJugadores) throws Exception;
 }

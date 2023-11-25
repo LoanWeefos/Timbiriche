@@ -11,12 +11,12 @@ package org.itson.dominio;
 public class Tablero {
 
     private int dimension;
-    private Cuadro cuadros;
+    private Cuadro[][] cuadros;
 
     public Tablero() {
     }
 
-    public Tablero(int dimension, Cuadro cuadros) {
+    public Tablero(int dimension, Cuadro[][] cuadros) {
         this.dimension = dimension;
         this.cuadros = cuadros;
     }
@@ -29,12 +29,21 @@ public class Tablero {
         this.dimension = dimension;
     }
 
-    public Cuadro getCuadros() {
+    public Cuadro[][] getCuadros() {
         return cuadros;
     }
 
-    public void setCuadros(Cuadro cuadros) {
+    public void setCuadros(Cuadro[][] cuadros) {
         this.cuadros = cuadros;
+    }
+
+    public void generarCuadros() {
+        cuadros = new Cuadro[dimension - 1][dimension - 1];
+        for (int fila = 0; fila < dimension - 1; fila++) {
+            for (int columna = 0; columna < dimension - 1; columna++) {
+                cuadros[fila][columna] = new Cuadro();
+            }
+        }
     }
 
     @Override

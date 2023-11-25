@@ -34,7 +34,9 @@ public class ModelSala implements IModelSala {
     }
 
     @Override
-    public Sala crearSala(Sala sala) throws Exception {
+    public Sala crearSala(int cantidadJugadores) throws Exception {
+        Sala sala = new Sala();
+        sala.setCantidadJugadores(cantidadJugadores);
         sala.setCodigo(generarCodigoSala());
         return sala;
     }

@@ -11,13 +11,13 @@ package org.itson.dominio;
 public class Juego {
 
     private int siguiente;
-    private Jugador jugadores;
+    private Jugador[] jugadores;
     private Long tiempo;
 
     public Juego() {
     }
 
-    public Juego(int siguiente, Jugador jugadores, Long tiempo) {
+    public Juego(int siguiente, Jugador[] jugadores, Long tiempo) {
         this.siguiente = siguiente;
         this.jugadores = jugadores;
         this.tiempo = tiempo;
@@ -31,11 +31,11 @@ public class Juego {
         this.siguiente = siguiente;
     }
 
-    public Jugador getJugadores() {
+    public Jugador[] getJugadores() {
         return jugadores;
     }
 
-    public void setJugadores(Jugador jugadores) {
+    public void setJugadores(Jugador[] jugadores) {
         this.jugadores = jugadores;
     }
 

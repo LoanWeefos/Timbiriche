@@ -4,7 +4,11 @@
  */
 package com.itson.t_modelview.factory;
 
+import com.itson.t_modelview.ViewModelInicio;
 import com.itson.t_modelview.ViewModelSala;
+import com.itson.t_modelview.ViewModelJuego;
+import com.itson.t_modelview.interfaces.IViewModelInicio;
+import com.itson.t_modelview.interfaces.IViewModelJuego;
 import com.itson.t_modelview.interfaces.IViewModelSala;
 
 /**
@@ -20,5 +24,13 @@ public final class ViewModelFactory {
      */
     public static IViewModelSala getViewModelSala(){
         return ViewModelSala.getInstance();
+    }
+    
+    public static IViewModelInicio getViewModelInicio(){
+        return ViewModelInicio.getInstance();
+    }
+    
+    public static IViewModelJuego getViewModelJuego(){
+        return ViewModelJuego.getInstance();
     }
 }

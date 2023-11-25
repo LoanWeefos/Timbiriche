@@ -4,6 +4,7 @@
  */
 package com.itson.t_modelview.interfaces;
 
+import javax.swing.JFrame;
 import org.itson.dominio.Sala;
 
 /**
@@ -12,5 +13,8 @@ import org.itson.dominio.Sala;
  */
 public interface IViewModelSala {
     
-    Sala crearSala(Sala sala) throws Exception;
+    Sala crearSala(String nombreJugador, int cantidadJugadores) throws Exception;
+    void cambiarSalaMenu() throws Exception;
+    void cambiarTablero(int cantJugadores, String[] iconos) throws Exception;
+    void cambiarJuegoSala(JFrame tablero) throws Exception;
 }

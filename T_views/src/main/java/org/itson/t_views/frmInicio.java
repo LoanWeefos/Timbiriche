@@ -4,7 +4,11 @@
  */
 package org.itson.t_views;
 
+import com.itson.t_modelview.facade.FachadaViewModel;
+import com.itson.t_modelview.interfaces.IFachadaViewModel;
 import java.awt.Color;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -14,9 +18,11 @@ public class frmInicio extends javax.swing.JFrame {
 
     // Instancia única del Singleton
     private static frmInicio instance = null;
+    private final IFachadaViewModel fachadaViewModel;
 
     // Constructor privado para evitar instanciación directa
     public frmInicio() {
+        this.fachadaViewModel = new FachadaViewModel();
         initComponents();
     }
 
@@ -150,9 +156,11 @@ public class frmInicio extends javax.swing.JFrame {
     }//GEN-LAST:event_btnSalirActionPerformed
 
     private void btnEntrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEntrarActionPerformed
-        frmMenu frame = frmMenu.getInstance();
-        frame.setVisible(true);
-        this.dispose();
+        try {
+            fachadaViewModel.cambiarInicioMenu();
+        } catch (Exception ex) {
+            Logger.getLogger(frmInicio.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_btnEntrarActionPerformed
 
     private void btnEntrarMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEntrarMousePressed

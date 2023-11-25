@@ -4,11 +4,16 @@
  */
 package org.itson.t_views;
 
+import com.itson.t_modelview.facade.FachadaViewModel;
+import com.itson.t_modelview.interfaces.IFachadaViewModel;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.geom.Line2D;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.ImageIcon;
 
 /**
  *
@@ -19,16 +24,71 @@ public class frmJuego10x10 extends javax.swing.JFrame {
     private final Color colorDefault = Color.decode("#A69185");
     private Color colorMouseOver = Color.decode("#B13A3A");
     private int filaMouseOver = -1;
+    private int filaMouseOver2 = -1;
     private int lineaMouseOver = -1;
-    private final boolean[][] lineasColoreadas;
+    private int lineaMouseOver2 = -1;
+    private boolean[][] lineasColoreadas;
+    private Color[][] colorLineas;
+    private boolean[][] lineasColoreadas2;
+    private Color[][] colorLineas2;
     private int turnoJugador = 1;
+    private String[][] jugadores;
+    private String nombreJugador;
+    private int puntosJugador1 = 0;
+    private int puntosJugador2 = 0;
+
+    private static frmJuego10x10 instance = null;
+    private final IFachadaViewModel fachadaViewModel;
 
     /**
      * Creates new form frmJuego
      */
-    public frmJuego10x10() {
+    private frmJuego10x10() {
+        this.fachadaViewModel = new FachadaViewModel();
         initComponents();
+        generarDatos();
+    }
+
+    private void reset() {
         lineasColoreadas = new boolean[10][9];
+        colorLineas = new Color[10][9];
+        lineasColoreadas2 = new boolean[11][9];
+        colorLineas2 = new Color[11][9];
+        turnoJugador = 1;
+        puntosJugador1 = 0;
+        puntosJugador2 = 0;
+    }
+
+    public static frmJuego10x10 getInstance() {
+        if (instance == null) {
+            instance = new frmJuego10x10();
+        }
+        return instance;
+    }
+
+    private void generarDatos() {
+        actualizarPuntos(0);
+        jugadores = new String[2][2];
+        lineasColoreadas = new boolean[10][9];
+        colorLineas = new Color[10][9];
+        lineasColoreadas2 = new boolean[11][9];
+        colorLineas2 = new Color[11][9];
+        try {
+            fachadaViewModel.crearTablero(10);
+            fachadaViewModel.crearJuego(jugadores);
+        } catch (Exception ex) {
+            Logger.getLogger(frmSala.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public void asignarNombre() {
+        nombreJugador = jugadores[0][0];
+        lblJugador1.setText(nombreJugador);
+    }
+
+    public void asignarIconos() {
+        lblIcon1.setIcon(new ImageIcon(getClass().getClassLoader().getResource(jugadores[0][1])));
+        lblIcon2.setIcon(new ImageIcon(getClass().getClassLoader().getResource(jugadores[1][1])));
     }
 
     /**
@@ -55,6 +115,8 @@ public class frmJuego10x10 extends javax.swing.JFrame {
         lblJugador2 = new javax.swing.JLabel();
         pnlTablero = new javax.swing.JPanel();
         lblTablero = new javax.swing.JLabel();
+        lblPuntos2 = new javax.swing.JLabel();
+        lblPuntos1 = new javax.swing.JLabel();
         lblTiempo = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -177,6 +239,14 @@ public class frmJuego10x10 extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        lblPuntos2.setFont(new java.awt.Font("Poppins SemiBold", 1, 18)); // NOI18N
+        lblPuntos2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblPuntos2.setPreferredSize(new java.awt.Dimension(100, 40));
+
+        lblPuntos1.setFont(new java.awt.Font("Poppins SemiBold", 1, 18)); // NOI18N
+        lblPuntos1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblPuntos1.setPreferredSize(new java.awt.Dimension(100, 40));
+
         javax.swing.GroupLayout pnlContenedorLayout = new javax.swing.GroupLayout(pnlContenedor);
         pnlContenedor.setLayout(pnlContenedorLayout);
         pnlContenedorLayout.setHorizontalGroup(
@@ -188,17 +258,23 @@ public class frmJuego10x10 extends javax.swing.JFrame {
                         .addComponent(lblJugador1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(pnlContenedorLayout.createSequentialGroup()
                         .addGap(32, 32, 32)
-                        .addComponent(pnlIcon1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(pnlIcon1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(pnlContenedorLayout.createSequentialGroup()
+                        .addGap(26, 26, 26)
+                        .addComponent(lblPuntos1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(pnlTablero, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(pnlContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnlContenedorLayout.createSequentialGroup()
+                        .addGap(30, 30, 30)
+                        .addComponent(pnlIcon2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(pnlContenedorLayout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(lblJugador2, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(pnlContenedorLayout.createSequentialGroup()
-                        .addGap(30, 30, 30)
-                        .addComponent(pnlIcon2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(29, 29, 29)
+                        .addComponent(lblPuntos2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(16, Short.MAX_VALUE))
         );
         pnlContenedorLayout.setVerticalGroup(
             pnlContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -208,11 +284,15 @@ public class frmJuego10x10 extends javax.swing.JFrame {
                     .addGroup(pnlContenedorLayout.createSequentialGroup()
                         .addComponent(pnlIcon1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(lblJugador1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(lblJugador1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lblPuntos1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(pnlContenedorLayout.createSequentialGroup()
                         .addComponent(pnlIcon2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(lblJugador2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(lblJugador2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lblPuntos2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(pnlTablero, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -243,7 +323,7 @@ public class frmJuego10x10 extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(btnSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addComponent(pnlContenedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(25, Short.MAX_VALUE))
+                .addContainerGap(15, Short.MAX_VALUE))
         );
         pnlSalaLayout.setVerticalGroup(
             pnlSalaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -289,28 +369,54 @@ public class frmJuego10x10 extends javax.swing.JFrame {
     }//GEN-LAST:event_btnSalirActionPerformed
 
     private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
-        frmMenu frame = frmMenu.getInstance();
-        frame.setVisible(true);
-        dispose();
+        try {
+            reset();
+            fachadaViewModel.cambiarJuegoSala(this);
+        } catch (Exception ex) {
+            Logger.getLogger(frmJuego10x10.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_btnRegresarActionPerformed
 
     private void lblTableroMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblTableroMouseMoved
-        checkMouseOver(evt.getX() + 220, evt.getY() + 127);
+        checkMouseOverHorizontales(evt.getX() + 220, evt.getY() + 127);
+        checkMouseOverVerticales(evt.getX() + 220, evt.getY() + 127);
     }//GEN-LAST:event_lblTableroMouseMoved
 
     private void lblTableroMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblTableroMouseExited
-        checkMouseOver(0, 0);
+        checkMouseOverHorizontales(0, 0);
+        checkMouseOverVerticales(0, 0);
     }//GEN-LAST:event_lblTableroMouseExited
 
     private void lblTableroMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblTableroMouseClicked
-        if (filaMouseOver != -1 && lineaMouseOver != -1 && !lineasColoreadas[filaMouseOver][lineaMouseOver]) {
-            lineasColoreadas[filaMouseOver][lineaMouseOver] = true;
-            cambiarTurno();
-            repaint();
-        }
+        pintarClick();
     }//GEN-LAST:event_lblTableroMouseClicked
 
-    private void checkMouseOver(int mouseX, int mouseY) {
+    private void pintarClick() {
+        if (filaMouseOver != -1 && lineaMouseOver != -1 && !lineasColoreadas[filaMouseOver][lineaMouseOver]) {
+            try {
+                lineasColoreadas[filaMouseOver][lineaMouseOver] = true;
+                colorLineas[filaMouseOver][lineaMouseOver] = colorMouseOver;
+                fachadaViewModel.asignarLineaACuadro(filaMouseOver, lineaMouseOver, "1", turnoJugador);
+                cambiarTurno();
+                repaint();
+            } catch (Exception ex) {
+                Logger.getLogger(frmJuego10x10.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        if (filaMouseOver2 != -1 && lineaMouseOver2 != -1 && !lineasColoreadas2[filaMouseOver2][lineaMouseOver2]) {
+            try {
+                lineasColoreadas2[filaMouseOver2][lineaMouseOver2] = true;
+                colorLineas2[filaMouseOver2][lineaMouseOver2] = colorMouseOver;
+                fachadaViewModel.asignarLineaACuadro(lineaMouseOver2, filaMouseOver2, "2", turnoJugador);
+                cambiarTurno();
+                repaint();
+            } catch (Exception ex) {
+                Logger.getLogger(frmJuego10x10.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
+
+    private void checkMouseOverHorizontales(int mouseX, int mouseY) {
         int grosorLinea = 7;
         float startX = 233;
         int startY = 132;
@@ -350,11 +456,52 @@ public class frmJuego10x10 extends javax.swing.JFrame {
         repaint();
     }
 
+    private void checkMouseOverVerticales(int mouseX, int mouseY) {
+        int grosorLinea = 7;
+        float startX = 225;
+        int startY = 140;
+        float distanciaEntreLineas = 41.5f;
+        int numeroDeFilas = 11;
+        int numeroDeLineas = 9;
+
+        filaMouseOver2 = -1;
+        lineaMouseOver2 = -1;
+
+        for (int i = 0; i < numeroDeLineas; i++) {
+            for (int fila = 0; fila < numeroDeFilas - 1; fila++) {
+                float endX = startX;
+                float endY = startY + 25;
+
+                float realStartX = startX - grosorLinea;
+                float realEndX = endX + grosorLinea;
+                float realStartY = startY;
+                float realEndY = endY;
+
+                if (mouseX >= realStartX && mouseX <= realEndX && mouseY >= realStartY && mouseY <= realEndY) {
+                    filaMouseOver2 = fila;
+                    lineaMouseOver2 = i;
+                    break;
+                }
+
+                startX += distanciaEntreLineas;
+            }
+
+            if (filaMouseOver2 != -1) {
+                break;
+            }
+
+            startX = 225;
+            startY += 42;
+        }
+
+        repaint();
+    }
+
     @Override
     public void paint(Graphics g) {
         super.paint(g);
         pintarHorizontales(g);
-
+        pintarVerticales(g);
     }
 
     private void pintarHorizontales(Graphics g) {
@@ -376,10 +523,14 @@ public class frmJuego10x10 extends javax.swing.JFrame {
                 Line2D.Float linea = new Line2D.Float(startX, startY, endX, endY);
 
                 if (fila == filaMouseOver && i == lineaMouseOver && !lineasColoreadas[fila][i]) {
-                    g2d.setColor(turnoJugador == 1 ? Color.decode("#B13A3A") : Color.decode("#30B856"));
+                    g2d.setColor(colorMouseOver);
                     g2d.draw(linea);
                 } else {
-                    g2d.setColor(lineasColoreadas[fila][i] ? colorDefault : Color.decode("#A69185"));
+                    if (colorLineas[fila][i] != null) {
+                        g2d.setColor(colorLineas[fila][i]);
+                    } else {
+                        g2d.setColor(lineasColoreadas[fila][i] ? colorDefault : Color.decode("#A69185"));
+                    }
                     g2d.draw(linea);
                 }
 
@@ -391,13 +542,51 @@ public class frmJuego10x10 extends javax.swing.JFrame {
         }
     }
 
+    private void pintarVerticales(Graphics g) {
+        Graphics2D g2d = (Graphics2D) g;
+        int grosorLinea = 7;
+        g2d.setStroke(new BasicStroke(grosorLinea));
+
+        float startX = 225;
+        int startY = 140;
+        float distanciaEntreLineas = 41.5f;
+        int numeroDeFilas = 11;
+        int numeroDeLineas = 9;
+
+        for (int i = 0; i < numeroDeLineas; i++) {
+            for (int fila = 0; fila < numeroDeFilas - 1; fila++) {
+                float endX = startX;
+                float endY = startY + 25;
+
+                Line2D.Float linea = new Line2D.Float(startX, startY, endX, endY);
+
+                if (fila == filaMouseOver2 && i == lineaMouseOver2 && !lineasColoreadas2[fila][i]) {
+                    g2d.setColor(colorMouseOver);
+                    g2d.draw(linea);
+                } else {
+                    if (colorLineas2[fila][i] != null) {
+                        g2d.setColor(colorLineas2[fila][i]);
+                    } else {
+                        g2d.setColor(lineasColoreadas2[fila][i] ? colorDefault : Color.decode("#A69185"));
+                    }
+                    g2d.draw(linea);
+                }
+
+                startX += distanciaEntreLineas;
+            }
+
+            startX = 225;
+            startY += 42;
+        }
+    }
+
     private void cambiarTurno() {
         if (turnoJugador == 1) {
             turnoJugador++;
-            colorMouseOver = Color.decode("#B13A3A");
+            colorMouseOver = Color.decode("#30B856");
         } else if (turnoJugador == 2) {
             turnoJugador--;
-            colorMouseOver = Color.decode("#30B856");
+            colorMouseOver = Color.decode("#B13A3A");
         }
     }
 
@@ -410,6 +599,8 @@ public class frmJuego10x10 extends javax.swing.JFrame {
     private javax.swing.JLabel lblJugador2;
     private javax.swing.JLabel lblLulu;
     private javax.swing.JLabel lblLulu1;
+    private javax.swing.JLabel lblPuntos1;
+    private javax.swing.JLabel lblPuntos2;
     private javax.swing.JLabel lblTablero;
     private javax.swing.JLabel lblTiempo;
     private javax.swing.JLabel lblTitulo;
@@ -419,4 +610,36 @@ public class frmJuego10x10 extends javax.swing.JFrame {
     private javax.swing.JPanel pnlSala;
     private javax.swing.JPanel pnlTablero;
     // End of variables declaration//GEN-END:variables
+
+    public int getTurnoJugador() {
+        return turnoJugador;
+    }
+
+    public String[][] getJugadores() {
+        return jugadores;
+    }
+
+    public void setJugadores(String[][] jugadores) {
+        this.jugadores = jugadores;
+    }
+
+    public void actualizarPuntos(int turno) {
+        if (turno != 0) {
+
+            if (turno == 1) {
+                puntosJugador1++;
+            }
+            if (turno == 2) {
+                puntosJugador2++;
+            }
+//            if (turno == 3) {
+//                puntosJugador3++;
+//            }
+//            if (turno == 4) {
+//                puntosJugador4++;
+//            }
+        }
+        lblPuntos1.setText("Puntos: " + puntosJugador1);
+        lblPuntos2.setText("Puntos: " + puntosJugador2);
+    }
 }

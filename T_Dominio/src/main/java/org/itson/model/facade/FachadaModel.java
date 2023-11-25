@@ -4,10 +4,16 @@
  */
 package org.itson.model.facade;
 
+import org.itson.dominio.Juego;
+import org.itson.dominio.Jugador;
 import org.itson.dominio.Sala;
+import org.itson.dominio.Tablero;
 import org.itson.model.factory.ModelFactory;
 import org.itson.model.interfaces.IFachadaModel;
+import org.itson.model.interfaces.IModelJuego;
+import org.itson.model.interfaces.IModelJugador;
 import org.itson.model.interfaces.IModelSala;
+import org.itson.model.interfaces.IModelTablero;
 
 /**
  *
@@ -15,15 +21,57 @@ import org.itson.model.interfaces.IModelSala;
  */
 public class FachadaModel implements IFachadaModel{
     private final IModelSala modelSala;
+    private final IModelJugador modelJugador;
+    private final IModelTablero modelTablero;
+    private final IModelJuego modelJuego;
 
     public FachadaModel() {
         this.modelSala = ModelFactory.getModelSala();
+        this.modelJugador = ModelFactory.getModelJugador();
+        this.modelTablero = ModelFactory.getModelTablero();
+        this.modelJuego = ModelFactory.getModelJuego();
     }
 
     @Override
-    public Sala crearSala(Sala sala) throws Exception {
+    public Sala crearSala(int cantidadJugadores) throws Exception {
         try {
-            return this.modelSala.crearSala(sala);
+            return this.modelSala.crearSala(cantidadJugadores);
+        } catch (Exception e) {
+            throw new Exception(e.getMessage());
+        }
+    }
+
+    @Override
+    public Jugador crearJugador(String nombreJugador) throws Exception{
+        try {
+            return this.modelJugador.crearJugador(nombreJugador);
+        } catch (Exception e) {
+            throw new Exception(e.getMessage());
+        }
+    }
+
+    @Override
+    public Tablero crearTablero(int dimension) throws Exception {
+        try {
+            return this.modelTablero.crearTablero(dimension);
+        } catch (Exception e) {
+            throw new Exception(e.getMessage());
+        }
+    }
+    
+    @Override
+    public Juego crearJuego(String[][] jugadores) throws Exception{
+        try {
+            return this.modelJuego.crearJuego(jugadores);
+        } catch (Exception e) {
+            throw new Exception(e.getMessage());
+        }
+    }
+    
+    @Override
+    public Jugador crearJugadores(String jugador) throws Exception{
+        try {
+            return this.modelJuego.crearJugadores(jugador);
         } catch (Exception e) {
             throw new Exception(e.getMessage());
         }
