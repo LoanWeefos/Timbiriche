@@ -38,6 +38,7 @@ public class ModelSala implements IModelSala {
         Sala sala = new Sala();
         sala.setCantidadJugadores(cantidadJugadores);
         sala.setCodigo(generarCodigoSala());
+        //codigo cliente crear sala
         return sala;
     }
 }
