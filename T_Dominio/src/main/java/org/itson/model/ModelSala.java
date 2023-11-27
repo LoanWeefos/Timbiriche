@@ -7,6 +7,7 @@ package org.itson.model;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.itson.dominio.Sala;
 import org.itson.model.interfaces.IModelSala;
+import org.itson.model.sockets.Cliente;
 
 /**
  *
@@ -38,7 +39,9 @@ public class ModelSala implements IModelSala {
         Sala sala = new Sala();
         sala.setCantidadJugadores(cantidadJugadores);
         sala.setCodigo(generarCodigoSala());
-        //codigo cliente crear sala
+        Cliente solicitudCliente = new Cliente();
+        solicitudCliente.unirServidor();
+        solicitudCliente.crearSala(sala);
         return sala;
     }
 }

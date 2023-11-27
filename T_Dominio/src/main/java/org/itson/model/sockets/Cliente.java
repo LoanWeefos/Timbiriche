@@ -34,18 +34,15 @@ public class Cliente implements ICliente {
         return Cliente.cliente;
     }
 
-    private Cliente(){
-        
-    }
-    
-    public static void main(String[] args) throws IOException, ClassNotFoundException {
+    public Cliente() {
 
+    }
+
+    public void unirServidor() throws IOException, ClassNotFoundException {
         final int PORT = 6942;
         Socket socket = new Socket("localhost", PORT);
-
-        ObjectInputStream is = new ObjectInputStream(socket.getInputStream());
-        ObjectOutputStream os = new ObjectOutputStream(socket.getOutputStream());
-
+        is = new ObjectInputStream(socket.getInputStream());
+        os = new ObjectOutputStream(socket.getOutputStream());
     }
 
     /**
@@ -54,10 +51,11 @@ public class Cliente implements ICliente {
      * @param objeto
      */
     @Override
-    public void crearSala(String solicitud, Object objeto) {
+    public void crearSala(Object objeto) {
+        String solicitud = "CREAR_SALA";
         try {
             SolicitudDTO soli = new SolicitudDTO(solicitud, objeto);
-
+            os.flush();
             if (os != null) {
                 os.writeObject(soli);
                 os.flush();
@@ -70,11 +68,11 @@ public class Cliente implements ICliente {
     }
 
     /**
-     * 
+     *
      * @param solicitud
      * @param codigo
      * @return
-     * @throws ClassNotFoundException 
+     * @throws ClassNotFoundException
      */
     public boolean mandarCodigo(String solicitud, String codigo) throws ClassNotFoundException {
         try {

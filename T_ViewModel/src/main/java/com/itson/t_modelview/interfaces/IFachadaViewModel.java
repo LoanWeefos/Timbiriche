@@ -18,6 +18,7 @@ public interface IFachadaViewModel {
     
     Sala crearSala(String nombreJugador, int cantidadJugadores) throws Exception;
     void cambiarInicioMenu() throws Exception;
+    void unirseSala(String nombreJugador, String codigoSala) throws Exception;
     void cambiarMenuInicio() throws Exception;
     void cambiarSalaMenu() throws Exception;
     void cambiarTablero(int cantJugadores, String[] iconos) throws Exception;

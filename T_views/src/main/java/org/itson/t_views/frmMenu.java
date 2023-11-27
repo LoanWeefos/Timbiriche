@@ -286,7 +286,11 @@ public class frmMenu extends javax.swing.JFrame {
     }//GEN-LAST:event_btnUnirseMouseReleased
 
     private void btnUnirseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUnirseActionPerformed
-        unirseSala();
+        try {
+            unirseSala();
+        } catch (Exception ex) {
+            Logger.getLogger(frmMenu.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_btnUnirseActionPerformed
 
     private void txtUsuarioKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtUsuarioKeyTyped
@@ -373,18 +377,12 @@ public class frmMenu extends javax.swing.JFrame {
         }
     }
 
-    private void unirseSala() {
+    private void unirseSala() throws Exception {
         String nombreJugador = txtUsuario.getText();
         String codigoSala = preguntarCodigoSala();
 
-        if (codigoSala != null) {
-            frmSala frame = frmSala.getInstance();
-            frame.setNombre(nombreJugador);
-            frame.setCodigo(codigoSala);
-            frame.actualizarVentana();
-            frame.setVisible(true);
-            dispose();
-        }
+        fachadaViewModel.unirseSala(nombreJugador, codigoSala);
+
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

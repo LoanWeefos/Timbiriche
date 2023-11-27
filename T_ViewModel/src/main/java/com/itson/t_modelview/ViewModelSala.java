@@ -114,4 +114,18 @@ public class ViewModelSala implements IViewModelSala {
         }
         return jugadores;
     }
+
+    @Override
+    public void unirseSala() throws Exception {      
+//        if (codigoSala != null) {
+//            frmSala frame = frmSala.getInstance();
+//            frame.setNombre(nombreJugador);
+//            frame.setCodigo(codigoSala);
+//            frame.actualizarVentana();
+//            frame.setVisible(true);
+//            dispose();
+//        }
+    }
+    
+    
 }

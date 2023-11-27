@@ -12,5 +12,5 @@ import java.io.ObjectOutputStream;
  * @author xeron
  */
 public interface ICliente {
-    void crearSala(String solicitud, Object objeto);
+    void crearSala(Object objeto);
 }

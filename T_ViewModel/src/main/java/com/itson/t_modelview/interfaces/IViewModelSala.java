@@ -14,6 +14,7 @@ import org.itson.dominio.Sala;
 public interface IViewModelSala {
     
     Sala crearSala(String nombreJugador, int cantidadJugadores) throws Exception;
+    void unirseSala() throws Exception;
     void cambiarSalaMenu() throws Exception;
     void cambiarTablero(int cantJugadores, String[] iconos) throws Exception;
     void cambiarJuegoSala(JFrame tablero) throws Exception;
