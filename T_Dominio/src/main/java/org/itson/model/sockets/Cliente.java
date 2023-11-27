@@ -9,12 +9,15 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import org.itson.model.interfaces.ICliente;
 
 /**
  *
  * @author xeron
  */
-public class Cliente {
+public class Cliente implements ICliente {
+
+    private ObjectOutputStream os;
 
     private static Cliente cliente;
 
@@ -40,18 +43,25 @@ public class Cliente {
 
     }
 
-    public static void crearSala(ObjectOutputStream os, ObjectInputStream is, String solicitud, Object objeto){
-        try{
+    /**
+     *
+     * @param solicitud
+     * @param objeto
+     */
+    @Override
+    public void crearSala(String solicitud, Object objeto) {
+        try {
             SolicitudDTO soli = new SolicitudDTO(solicitud, objeto);
-            os.writeObject(soli);
-            Object respuesta = is.readObject();
-            //AQUI PARA LEER ES UN PEDOTE PERO SI VAMOS A LEER PURO OBJETO
-            //SE PUEDE HACER CON UN instanceof Y AHI TAMOS PQ SI QUIERO LEER
-            //UN STRING TMB TENGO QUE HACER UN DTO PARA LA RESPUESTA Y LA NETA
-            //AHIDILE LULU
-        }catch(IOException | ClassNotFoundException e){
-            System.err.println("Ocurrió un error al crear la sala...");
+
+            if (os != null) {
+                os.writeObject(soli);
+                os.flush();
+            } else {
+                System.err.println("Error con ObjectOutputStream no está inicializado correctamente.");
+            }
+        } catch (IOException e) {
+            System.err.println("Error al crear la sala: " + e.getMessage());
         }
     }
-    
+
 }

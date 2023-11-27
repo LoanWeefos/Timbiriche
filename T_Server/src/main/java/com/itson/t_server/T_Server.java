@@ -3,6 +3,8 @@
  */
 package com.itson.t_server;
 
+import com.itson.compartidos.SolicitudDTO;
+import com.itson.dominiodtos.Sala;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -38,10 +40,16 @@ public class T_Server {
                 ObjectOutputStream os = new ObjectOutputStream(
                         socketCliente.getOutputStream());
 
-                solicitud = (String) is.readObject();
+                Object solicitudObject = is.readObject();
 
-                if (solicitud.equals("FECHA")) {
-                    mandarFecha(os);
+                if (solicitudObject instanceof SolicitudDTO solicitudDTO) {
+                    solicitud = solicitudDTO.getSolicitud();
+                    Object objeto = solicitudDTO.getObjeto();
+
+                    if (solicitud.equals("CREAR_SALA") && objeto instanceof Sala) {
+                        Sala sala = (Sala) objeto;
+                        guardarSala(os, sala);
+                    }
                 }
             }
         } catch (IOException e) {
@@ -50,6 +58,11 @@ public class T_Server {
 
     }
 
+    public static void guardarSala(ObjectOutputStream os, Sala sala) throws IOException{
+        sala.getCantidadJugadores();
+        sala.getCodigo();
+    }
+    
     public static void mandarFecha(ObjectOutputStream os) throws IOException {
         SimpleDateFormat fechaChila = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
         Date fechaSarra = new Date();
