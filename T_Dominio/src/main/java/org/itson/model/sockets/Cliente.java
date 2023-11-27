@@ -19,43 +19,31 @@ public class Cliente implements ICliente {
 
     private ObjectOutputStream os;
     private ObjectInputStream is;
-
     private static Cliente cliente;
 
-    /**
-     * Método que regresa una instancia de la clase. Usa el patrón Singleton.
-     *
-     * @return instancia de la clase.
-     */
     public static Cliente getInstance() {
-        if (Cliente.cliente == null) {
-            Cliente.cliente = new Cliente();
+        if (cliente == null) {
+            cliente = new Cliente();
         }
-        return Cliente.cliente;
+        return cliente;
     }
 
-    public Cliente() {
-
+    private Cliente() {
+        try {
+            final int PORT = 6942;
+            Socket socket = new Socket("localhost", PORT);
+            os = new ObjectOutputStream(socket.getOutputStream());
+            is = new ObjectInputStream(socket.getInputStream());
+        } catch (IOException e) {
+            System.err.println("Error al inicializar los flujos: " + e.getMessage());
+        }
     }
 
-    public void unirServidor() throws IOException, ClassNotFoundException {
-        final int PORT = 6942;
-        Socket socket = new Socket("localhost", PORT);
-        is = new ObjectInputStream(socket.getInputStream());
-        os = new ObjectOutputStream(socket.getOutputStream());
-    }
-
-    /**
-     *
-     * @param solicitud
-     * @param objeto
-     */
     @Override
     public void crearSala(Object objeto) {
         String solicitud = "CREAR_SALA";
         try {
             SolicitudDTO soli = new SolicitudDTO(solicitud, objeto);
-            os.flush();
             if (os != null) {
                 os.writeObject(soli);
                 os.flush();
@@ -67,13 +55,6 @@ public class Cliente implements ICliente {
         }
     }
 
-    /**
-     *
-     * @param solicitud
-     * @param codigo
-     * @return
-     * @throws ClassNotFoundException
-     */
     public boolean mandarCodigo(String solicitud, String codigo) throws ClassNotFoundException {
         try {
             SolicitudDTO soli = new SolicitudDTO(solicitud, codigo);
@@ -85,19 +66,15 @@ public class Cliente implements ICliente {
                 Object respuesta = is.readObject();
 
                 if (respuesta instanceof Boolean) {
-                    boolean codigoCorrecto = (boolean) respuesta;
-
-                    return codigoCorrecto;
-
+                    return (boolean) respuesta;
                 } else {
-                    System.err.println("Error con ObjectOutputStream no está inicializado correctamente.");
+                    System.err.println("Error: La respuesta del servidor no es un booleano.");
                 }
             }
         } catch (IOException e) {
-            System.err.println("Error al crear la sala: " + e.getMessage());
+            System.err.println("Error al enviar código: " + e.getMessage());
         }
-        //este es por si acaso.
         return false;
     }
-
 }
+

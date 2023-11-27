@@ -4,11 +4,13 @@
  */
 package org.itson.dominio;
 
+import java.io.Serializable;
+
 /**
  *
  * @author Equipo 6
  */
-public enum Posicion {
+public enum Posicion implements Serializable{
     VERTICAL,
     HORIZONTAL
 }

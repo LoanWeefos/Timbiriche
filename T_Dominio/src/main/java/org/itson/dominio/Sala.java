@@ -4,11 +4,13 @@
  */
 package org.itson.dominio;
 
+import java.io.Serializable;
+
 /**
  *
  * @author Equipo 6
  */
-public class Sala {
+public class Sala implements Serializable{
 
     private String codigo;
     private int cantidadJugadores;

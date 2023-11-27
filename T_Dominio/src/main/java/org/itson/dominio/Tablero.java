@@ -4,11 +4,13 @@
  */
 package org.itson.dominio;
 
+import java.io.Serializable;
+
 /**
  *
  * @author Equipo 6
  */
-public class Tablero {
+public class Tablero implements Serializable{
 
     private int dimension;
     private Cuadro[][] cuadros;

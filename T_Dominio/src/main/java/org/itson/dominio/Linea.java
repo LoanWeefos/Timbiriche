@@ -4,11 +4,13 @@
  */
 package org.itson.dominio;
 
+import java.io.Serializable;
+
 /**
  *
  * @author Equipo 6
  */
-public class Linea {
+public class Linea implements Serializable{
     private int x;
     private int y;
     private Posicion posicion;

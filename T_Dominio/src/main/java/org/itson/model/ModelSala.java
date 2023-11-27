@@ -16,6 +16,7 @@ import org.itson.model.sockets.Cliente;
 public class ModelSala implements IModelSala {
 
     private static ModelSala modelSala;
+    Cliente cliente = Cliente.getInstance();
 
     /**
      * Método que regresa una instancia de la clase. Usa el patrón Singleton.
@@ -39,9 +40,7 @@ public class ModelSala implements IModelSala {
         Sala sala = new Sala();
         sala.setCantidadJugadores(cantidadJugadores);
         sala.setCodigo(generarCodigoSala());
-        Cliente solicitudCliente = new Cliente();
-        solicitudCliente.unirServidor();
-        solicitudCliente.crearSala(sala);
+        cliente.crearSala(sala);
         return sala;
     }
 }
