@@ -18,6 +18,7 @@ import org.itson.model.interfaces.ICliente;
 public class Cliente implements ICliente {
 
     private ObjectOutputStream os;
+    private ObjectInputStream is;
 
     private static Cliente cliente;
 
@@ -33,6 +34,10 @@ public class Cliente implements ICliente {
         return Cliente.cliente;
     }
 
+    private Cliente(){
+        
+    }
+    
     public static void main(String[] args) throws IOException, ClassNotFoundException {
 
         final int PORT = 6942;
@@ -62,6 +67,39 @@ public class Cliente implements ICliente {
         } catch (IOException e) {
             System.err.println("Error al crear la sala: " + e.getMessage());
         }
+    }
+
+    /**
+     * 
+     * @param solicitud
+     * @param codigo
+     * @return
+     * @throws ClassNotFoundException 
+     */
+    public boolean mandarCodigo(String solicitud, String codigo) throws ClassNotFoundException {
+        try {
+            SolicitudDTO soli = new SolicitudDTO(solicitud, codigo);
+
+            if (os != null) {
+                os.writeObject(soli);
+                os.flush();
+
+                Object respuesta = is.readObject();
+
+                if (respuesta instanceof Boolean) {
+                    boolean codigoCorrecto = (boolean) respuesta;
+
+                    return codigoCorrecto;
+
+                } else {
+                    System.err.println("Error con ObjectOutputStream no está inicializado correctamente.");
+                }
+            }
+        } catch (IOException e) {
+            System.err.println("Error al crear la sala: " + e.getMessage());
+        }
+        //este es por si acaso.
+        return false;
     }
 
 }

@@ -11,14 +11,21 @@ import java.io.Serializable;
  * @author xeron
  */
 public class SolicitudDTO implements Serializable{
-    private String solicitud;
+    private final String solicitud;
     private Object objeto;
+    private String codigo;
+    
     
     public SolicitudDTO(String solicitud, Object objeto) {
         this.solicitud = solicitud;
         this.objeto = objeto;
     }
 
+    public SolicitudDTO(String solicitud, String codigo) {
+        this.solicitud = solicitud;
+        this.codigo = codigo;
+    }
+    
     public String getSolicitud() {
         return solicitud;
     }
@@ -26,5 +33,6 @@ public class SolicitudDTO implements Serializable{
     public Object getObjeto() {
         return objeto;
     }
+    
 }
 

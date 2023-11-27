@@ -10,8 +10,6 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 /**
  *
@@ -24,6 +22,7 @@ public class T_Server {
         final int PORT = 6942;
         ServerSocket socket;
         String solicitud;
+        Sala sala = null;
 
         try {
             socket = new ServerSocket(PORT);
@@ -46,28 +45,41 @@ public class T_Server {
                     solicitud = solicitudDTO.getSolicitud();
                     Object objeto = solicitudDTO.getObjeto();
 
-                    if (solicitud.equals("CREAR_SALA") && objeto instanceof Sala) {
-                        Sala sala = (Sala) objeto;
-                        guardarSala(os, sala);
+                    try {
+                        if (solicitud.equals("CREAR_SALA") && objeto instanceof Sala) {
+                            sala = (Sala) objeto;
+                            System.out.println("Sala creada con el código: " + sala.getCodigo());
+                            
+                        }
+                        if (solicitud.equals("CODIGO_SALA") && objeto instanceof String) {
+                            String codigo = (String) objeto;
+                            if (codigo.equals(sala.getCodigo())) {
+                                System.out.println("Código correcto!");
+                                os.writeBoolean(true);
+                                os.flush();
+
+                            } else {
+                                System.out.println("Código incorrecto");
+                                os.writeBoolean(false);
+                                os.flush();
+                            }
+                        }
+                    } catch (NullPointerException e) {
+                        System.err.println("Error por nulo: " + e.getMessage());
+
+                    } catch (ClassCastException e) {
+                        System.err.println("Error al castear: " + e.getMessage());
+
+                    } catch (IOException e) {
+                        System.err.println("Error desconocido: " + e.getMessage());
+
                     }
                 }
             }
         } catch (IOException e) {
-            System.err.println("Error papi: " + e.getMessage());
+            System.err.println("Ocurrió un error: " + e.getMessage());
         }
 
     }
 
-    public static void guardarSala(ObjectOutputStream os, Sala sala) throws IOException{
-        sala.getCantidadJugadores();
-        sala.getCodigo();
-    }
-    
-    public static void mandarFecha(ObjectOutputStream os) throws IOException {
-        SimpleDateFormat fechaChila = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-        Date fechaSarra = new Date();
-        String fechaFormateada = fechaChila.format(fechaSarra);
-        os.writeObject(fechaFormateada);
-        os.flush();
-    }
 }
