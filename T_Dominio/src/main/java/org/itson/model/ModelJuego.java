@@ -4,9 +4,11 @@
  */
 package org.itson.model;
 
-import org.itson.dominio.Juego;
-import org.itson.dominio.Jugador;
+//import org.itson.dominio.Juego;
+//import org.itson.dominio.Jugador;
 import org.itson.model.interfaces.IModelJuego;
+import com.itson.dominio.Juego;
+import com.itson.dominio.Jugador;
 
 /**
  *

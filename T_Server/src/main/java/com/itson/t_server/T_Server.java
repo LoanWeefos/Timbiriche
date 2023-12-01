@@ -4,7 +4,7 @@
 package com.itson.t_server;
 
 import com.itson.compartidos.SolicitudDTO;
-import com.itson.dominiodtos.Sala;
+import com.itson.dominio.Sala;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;

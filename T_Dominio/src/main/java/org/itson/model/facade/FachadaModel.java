@@ -4,10 +4,14 @@
  */
 package org.itson.model.facade;
 
-import org.itson.dominio.Juego;
-import org.itson.dominio.Jugador;
-import org.itson.dominio.Sala;
-import org.itson.dominio.Tablero;
+//import org.itson.dominio.Juego;
+//import org.itson.dominio.Jugador;
+//import org.itson.dominio.Sala;
+//import org.itson.dominio.Tablero;
+import com.itson.dominio.Juego;
+import com.itson.dominio.Jugador;
+import com.itson.dominio.Sala;
+import com.itson.dominio.Tablero;
 import org.itson.model.factory.ModelFactory;
 import org.itson.model.interfaces.IFachadaModel;
 import org.itson.model.interfaces.IModelJuego;

@@ -4,7 +4,8 @@
  */
 package org.itson.model.interfaces;
 
-import org.itson.dominio.Sala;
+//import org.itson.dominio.Sala;
+import com.itson.dominio.Sala;
 
 /**
  *

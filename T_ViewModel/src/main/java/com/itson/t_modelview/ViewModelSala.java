@@ -6,8 +6,8 @@ package com.itson.t_modelview;
 
 import com.itson.t_modelview.interfaces.IViewModelSala;
 import javax.swing.JFrame;
-import org.itson.dominio.Jugador;
-import org.itson.dominio.Sala;
+import com.itson.dominio.Jugador;
+import com.itson.dominio.Sala;
 import org.itson.model.facade.FachadaModel;
 import org.itson.model.interfaces.IFachadaModel;
 import org.itson.t_views.frmJuego10x10;

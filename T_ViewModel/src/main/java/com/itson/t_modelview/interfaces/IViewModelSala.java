@@ -5,7 +5,7 @@
 package com.itson.t_modelview.interfaces;
 
 import javax.swing.JFrame;
-import org.itson.dominio.Sala;
+import com.itson.dominio.Sala;
 
 /**
  *

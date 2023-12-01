@@ -4,7 +4,8 @@
  */
 package org.itson.model.interfaces;
 
-import org.itson.dominio.Jugador;
+//import org.itson.dominio.Jugador;
+import com.itson.dominio.Jugador;
 
 /**
  *

@@ -5,7 +5,8 @@
 package org.itson.model;
 
 import org.apache.commons.lang3.RandomStringUtils;
-import org.itson.dominio.Sala;
+//import org.itson.dominio.Sala;
+import com.itson.dominio.Sala;
 import org.itson.model.interfaces.IModelSala;
 import org.itson.model.sockets.Cliente;
 

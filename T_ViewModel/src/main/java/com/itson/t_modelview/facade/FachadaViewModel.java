@@ -10,10 +10,12 @@ import com.itson.t_modelview.interfaces.IViewModelInicio;
 import com.itson.t_modelview.interfaces.IViewModelJuego;
 import com.itson.t_modelview.interfaces.IViewModelSala;
 import javax.swing.JFrame;
-import org.itson.dominio.Cuadro;
-import org.itson.dominio.Juego;
-import org.itson.dominio.Sala;
-import org.itson.dominio.Tablero;
+
+import com.itson.dominio.Cuadro;
+import com.itson.dominio.Tablero;
+import com.itson.dominio.Juego;
+import com.itson.dominio.Sala;
+
 
 /**
  *

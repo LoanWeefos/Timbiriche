@@ -4,7 +4,8 @@
  */
 package org.itson.model.interfaces;
 
-import org.itson.dominio.Tablero;
+//import org.itson.dominio.Tablero;
+import com.itson.dominio.Tablero;
 
 /**
  *
