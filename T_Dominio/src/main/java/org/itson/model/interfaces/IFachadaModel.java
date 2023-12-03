@@ -24,4 +24,6 @@ public interface IFachadaModel {
     Tablero crearTablero(int dimension) throws Exception;
     Juego crearJuego(String[][] jugadores) throws Exception;
     Jugador crearJugadores(String jugador) throws Exception;
+    boolean unirseSala(String codigoSala) throws Exception;
+    Sala jalarSala() throws Exception;
 }

@@ -2,7 +2,6 @@ org\itson\model\ModelSala.class
 org\itson\model\interfaces\IModelTablero.class
 org\itson\model\sockets\Cliente.class
 org\itson\model\interfaces\IModelJuego.class
-org\itson\model\interfaces\ICliente.class
 org\itson\model\sockets\Perro.class
 org\itson\model\interfaces\IFachadaModel.class
 org\itson\model\ModelJugador.class

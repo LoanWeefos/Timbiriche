@@ -5,17 +5,17 @@
 package org.itson.model.sockets;
 
 import com.itson.compartidos.SolicitudDTO;
+import com.itson.dominio.Sala;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
-import org.itson.model.interfaces.ICliente;
 
 /**
  *
  * @author xeron
  */
-public class Cliente implements ICliente {
+public class Cliente {
 
     private ObjectOutputStream os;
     private ObjectInputStream is;
@@ -39,7 +39,6 @@ public class Cliente implements ICliente {
         }
     }
 
-    @Override
     public void crearSala(Object objeto) {
         String solicitud = "CREAR_SALA";
         try {
@@ -55,15 +54,30 @@ public class Cliente implements ICliente {
         }
     }
 
-    public boolean mandarCodigo(String solicitud, String codigo) throws ClassNotFoundException {
+    public void unirseSala(Object objeto, String codigoSala) {
+        String solicitud = "CODIGO_SALA";
+        try {
+            SolicitudDTO soli = new SolicitudDTO(solicitud, codigoSala);
+            if (os != null) {
+                os.writeObject(soli);
+                os.flush();
+            } else {
+                System.err.println("Error con ObjectOutputStream no está inicializado correctamente.");
+            }
+        } catch (IOException e) {
+            System.err.println("Error al crear la sala: " + e.getMessage());
+        }
+    }
+
+    public boolean mandarCodigo(String codigo) throws ClassNotFoundException {
+        String solicitud = "CODIGO_SALA";
         try {
             SolicitudDTO soli = new SolicitudDTO(solicitud, codigo);
-
             if (os != null) {
                 os.writeObject(soli);
                 os.flush();
 
-                Object respuesta = is.readObject();
+                Boolean respuesta = is.readBoolean();
 
                 if (respuesta instanceof Boolean) {
                     return (boolean) respuesta;
@@ -76,5 +90,26 @@ public class Cliente implements ICliente {
         }
         return false;
     }
-}
 
+    public Sala jalarSala() throws ClassNotFoundException {
+        String solicitud = "JALAR_SALA";
+        try {
+            SolicitudDTO soli = new SolicitudDTO(solicitud);
+            if (os != null) {
+                os.writeObject(soli);
+                os.flush();
+
+                Object sala = is.readObject();
+
+                if (sala instanceof Object) {
+                    return (Sala) sala;
+                } else {
+                    System.err.println("Error: La respuesta del servidor no es sala.");
+                }
+            }
+        } catch (IOException e) {
+            System.err.println("Error jalar la sala: " + e.getMessage());
+        }
+        return null;
+    }
+}

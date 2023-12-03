@@ -17,12 +17,22 @@ import java.net.Socket;
  */
 public class T_Server {
 
+    public static Sala sala;
+
+    public static Sala getSala() {
+        return sala;
+    }
+
+    public static void setSala(Sala sala) {
+        T_Server.sala = sala;
+    }
+
     public static void main(String[] args) throws IOException, ClassNotFoundException {
 
         final int PORT = 6942;
         ServerSocket socket;
         String solicitud;
-        Sala sala = null;
+        sala = null;
 
         try {
             socket = new ServerSocket(PORT);
@@ -44,16 +54,20 @@ public class T_Server {
                 if (solicitudObject instanceof SolicitudDTO solicitudDTO) {
                     solicitud = solicitudDTO.getSolicitud();
                     Object objeto = solicitudDTO.getObjeto();
+                    String codigo = solicitudDTO.getCodigo();
 
                     try {
+                        System.out.println("c1");
                         if (solicitud.equals("CREAR_SALA") && objeto instanceof Sala) {
-                            sala = (Sala) objeto;
+                            T_Server.setSala((Sala) objeto);
                             System.out.println("Sala creada con el código: " + sala.getCodigo());
-                            
+
                         }
-                        if (solicitud.equals("CODIGO_SALA") && objeto instanceof String) {
-                            String codigo = (String) objeto;
-                            if (codigo.equals(sala.getCodigo())) {
+                        System.out.println(codigo);
+                        System.out.println(solicitud);
+                        if (solicitud.equals("CODIGO_SALA") && codigo != null) {
+                            System.out.println(sala.toString());
+                            if (codigo.equalsIgnoreCase(sala.getCodigo())) {
                                 System.out.println("Código correcto!");
                                 os.writeBoolean(true);
                                 os.flush();
@@ -63,6 +77,10 @@ public class T_Server {
                                 os.writeBoolean(false);
                                 os.flush();
                             }
+                        }
+                        if (solicitud.equals("JALAR_SALA")) {
+                            os.writeObject(T_Server.getSala());
+                            os.flush();
                         }
                     } catch (NullPointerException e) {
                         System.err.println("Error por nulo: " + e.getMessage());

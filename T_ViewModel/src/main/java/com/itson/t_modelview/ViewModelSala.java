@@ -24,6 +24,7 @@ public class ViewModelSala implements IViewModelSala {
 
     private static ViewModelSala viewModelSala;
     private final IFachadaModel fachadaModel;
+    private Sala sala;
 
     public ViewModelSala() {
         this.fachadaModel = new FachadaModel();
@@ -43,11 +44,12 @@ public class ViewModelSala implements IViewModelSala {
 
     @Override
     public Sala crearSala(String nombreJugador, int cantidadJugadores) throws Exception {
-        Sala sala = fachadaModel.crearSala(cantidadJugadores);
+        sala = Sala.getInstance();
         Jugador jugador = fachadaModel.crearJugador(nombreJugador);
+        sala.setJugador(jugador);
+        sala = fachadaModel.crearSala(cantidadJugadores);
         if (sala != null) {
-            if (jugador != null) {
-                sala.setJugador(jugador);
+            if (sala.getJugador() != null) {
                 frmSala frame = frmSala.getInstance();
                 frmMenu frameM = frmMenu.getInstance();
                 frmSala.setNombre(sala.getJugador().getNombre());
@@ -59,6 +61,24 @@ public class ViewModelSala implements IViewModelSala {
             }
         }
         return sala;
+    }
+
+    @Override
+    public void unirseSala(String nombreJugador, String codigoSala) throws Exception {
+        Jugador jugador = fachadaModel.crearJugador(nombreJugador);
+        //Devolver sala creada
+        if (!fachadaModel.unirseSala(codigoSala)) {
+            sala = fachadaModel.jalarSala();
+            sala.setJugador2(jugador);
+            frmSala frame = frmSala.getInstance();
+            frmMenu frameM = frmMenu.getInstance();
+            frame.setNombre(nombreJugador);
+            frame.setCodigo(codigoSala.toUpperCase());
+            frame.actualizarVentana();
+            frame.setVisible(true);
+            frameM.dispose();
+            System.out.println(sala.toString());
+        }
     }
 
     @Override
@@ -115,17 +135,4 @@ public class ViewModelSala implements IViewModelSala {
         return jugadores;
     }
 
-    @Override
-    public void unirseSala() throws Exception {      
-//        if (codigoSala != null) {
-//            frmSala frame = frmSala.getInstance();
-//            frame.setNombre(nombreJugador);
-//            frame.setCodigo(codigoSala);
-//            frame.actualizarVentana();
-//            frame.setVisible(true);
-//            dispose();
-//        }
-    }
-    
-    
 }

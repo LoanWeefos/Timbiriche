@@ -126,7 +126,7 @@ public final class FachadaViewModel implements IFachadaViewModel {
     @Override
     public void unirseSala(String nombreJugador, String codigoSala) throws Exception {
         try {
-            this.viewModelSala.unirseSala();
+            this.viewModelSala.unirseSala(nombreJugador, codigoSala);
         } catch (Exception e) {
             throw new Exception(e.getMessage());
         }

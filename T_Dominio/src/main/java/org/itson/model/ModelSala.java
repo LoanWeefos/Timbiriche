@@ -18,6 +18,7 @@ public class ModelSala implements IModelSala {
 
     private static ModelSala modelSala;
     Cliente cliente;
+    Sala sala;
 
     /**
      * Método que regresa una instancia de la clase. Usa el patrón Singleton.
@@ -38,11 +39,24 @@ public class ModelSala implements IModelSala {
 
     @Override
     public Sala crearSala(int cantidadJugadores) throws Exception {
-        Sala sala = new Sala();
+        sala = Sala.getInstance();
         sala.setCantidadJugadores(cantidadJugadores);
         sala.setCodigo(generarCodigoSala());
-        cliente= Cliente.getInstance();
+        cliente = Cliente.getInstance();
         cliente.crearSala(sala);
+        System.out.println(sala.toString());
         return sala;
+    }
+
+    @Override
+    public boolean unirseSala(String codigoSala) throws Exception {
+        cliente = Cliente.getInstance();
+        return cliente.mandarCodigo(codigoSala);
+    }
+
+    @Override
+    public Sala jalarSala() throws Exception {
+        cliente = Cliente.getInstance();
+        return cliente.jalarSala();
     }
 }

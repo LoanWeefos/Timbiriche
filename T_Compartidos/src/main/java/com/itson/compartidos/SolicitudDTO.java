@@ -10,12 +10,20 @@ import java.io.Serializable;
  *
  * @author xeron
  */
-public class SolicitudDTO implements Serializable{
+public class SolicitudDTO implements Serializable {
+
     private final String solicitud;
     private Object objeto;
     private String codigo;
-    
-    
+
+    public String getCodigo() {
+        return codigo;
+    }
+
+    public void setCodigo(String codigo) {
+        this.codigo = codigo;
+    }
+
     public SolicitudDTO(String solicitud, Object objeto) {
         this.solicitud = solicitud;
         this.objeto = objeto;
@@ -25,7 +33,11 @@ public class SolicitudDTO implements Serializable{
         this.solicitud = solicitud;
         this.codigo = codigo;
     }
-    
+
+    public SolicitudDTO(String solicitud) {
+        this.solicitud = solicitud;
+    }
+
     public String getSolicitud() {
         return solicitud;
     }
@@ -33,6 +45,10 @@ public class SolicitudDTO implements Serializable{
     public Object getObjeto() {
         return objeto;
     }
-    
-}
 
+    @Override
+    public String toString() {
+        return "SolicitudDTO{" + "solicitud=" + solicitud + ", objeto=" + objeto + ", codigo=" + codigo + '}';
+    }
+
+}

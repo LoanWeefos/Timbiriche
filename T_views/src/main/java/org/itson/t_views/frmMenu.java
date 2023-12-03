@@ -380,7 +380,6 @@ public class frmMenu extends javax.swing.JFrame {
     private void unirseSala() throws Exception {
         String nombreJugador = txtUsuario.getText();
         String codigoSala = preguntarCodigoSala();
-
         fachadaViewModel.unirseSala(nombreJugador, codigoSala);
 
     }

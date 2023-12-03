@@ -23,7 +23,8 @@ import org.itson.model.interfaces.IModelTablero;
  *
  * @author ildex
  */
-public class FachadaModel implements IFachadaModel{
+public class FachadaModel implements IFachadaModel {
+
     private final IModelSala modelSala;
     private final IModelJugador modelJugador;
     private final IModelTablero modelTablero;
@@ -46,7 +47,7 @@ public class FachadaModel implements IFachadaModel{
     }
 
     @Override
-    public Jugador crearJugador(String nombreJugador) throws Exception{
+    public Jugador crearJugador(String nombreJugador) throws Exception {
         try {
             return this.modelJugador.crearJugador(nombreJugador);
         } catch (Exception e) {
@@ -62,22 +63,41 @@ public class FachadaModel implements IFachadaModel{
             throw new Exception(e.getMessage());
         }
     }
-    
+
     @Override
-    public Juego crearJuego(String[][] jugadores) throws Exception{
+    public Juego crearJuego(String[][] jugadores) throws Exception {
         try {
             return this.modelJuego.crearJuego(jugadores);
         } catch (Exception e) {
             throw new Exception(e.getMessage());
         }
     }
-    
+
     @Override
-    public Jugador crearJugadores(String jugador) throws Exception{
+    public Jugador crearJugadores(String jugador) throws Exception {
         try {
             return this.modelJuego.crearJugadores(jugador);
         } catch (Exception e) {
             throw new Exception(e.getMessage());
+        }
+    }
+
+    @Override
+    public boolean unirseSala(String codigoSala) throws Exception {
+        try {
+            return this.modelSala.unirseSala(codigoSala);
+        } catch (Exception e) {
+            throw new Exception(e.getMessage());
+        }
+    }
+
+    @Override
+    public Sala jalarSala() throws Exception {
+        try {
+            return this.modelSala.jalarSala();
+        } catch (Exception e) {
+            throw new Exception(e.getMessage());
+
         }
     }
 }
