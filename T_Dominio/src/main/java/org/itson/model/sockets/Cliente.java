@@ -22,10 +22,10 @@ public class Cliente implements ICliente {
     private static Cliente cliente;
 
     public static Cliente getInstance() {
-        if (cliente == null) {
-            cliente = new Cliente();
+        if (Cliente.cliente == null) {
+            Cliente.cliente = new Cliente();
         }
-        return cliente;
+        return Cliente.cliente;
     }
 
     private Cliente() {
