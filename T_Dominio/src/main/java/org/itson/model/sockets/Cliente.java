@@ -78,12 +78,7 @@ public class Cliente {
                 os.flush();
 
                 Boolean respuesta = is.readBoolean();
-
-                if (respuesta instanceof Boolean) {
-                    return (boolean) respuesta;
-                } else {
-                    System.err.println("Error: La respuesta del servidor no es un booleano.");
-                }
+                return respuesta;
             }
         } catch (IOException e) {
             System.err.println("Error al enviar código: " + e.getMessage());
@@ -95,6 +90,7 @@ public class Cliente {
         String solicitud = "JALAR_SALA";
         try {
             SolicitudDTO soli = new SolicitudDTO(solicitud);
+            System.out.println(soli);
             if (os != null) {
                 os.writeObject(soli);
                 os.flush();

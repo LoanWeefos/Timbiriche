@@ -15,9 +15,16 @@ import java.net.Socket;
  *
  * @author xeron
  */
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.net.ServerSocket;
+import java.net.Socket;
+
 public class T_Server {
 
-    public static Sala sala;
+    private static final int PORT = 6942;
+    private static Sala sala;
 
     public static Sala getSala() {
         return sala;
@@ -27,77 +34,84 @@ public class T_Server {
         T_Server.sala = sala;
     }
 
-    public static void main(String[] args) throws IOException, ClassNotFoundException {
-
-        final int PORT = 6942;
-        ServerSocket socket;
-        String solicitud;
-        sala = null;
+    public static void main(String[] args) throws IOException {
+        ServerSocket serverSocket = new ServerSocket(PORT);
+        System.out.println("Esperando jugadores...");
 
         try {
-            socket = new ServerSocket(PORT);
-            System.out.println("Esperando jugadores...");
-
             while (true) {
-                Socket socketCliente = socket.accept();
-                System.out.println("que onda plebes del: "
-                        + socketCliente.getInetAddress());
+                Socket clientSocket = serverSocket.accept();
+                System.out.println("Conexión entrante desde: " + clientSocket.getInetAddress());
 
-                ObjectInputStream is = new ObjectInputStream(
-                        socketCliente.getInputStream());
-
-                ObjectOutputStream os = new ObjectOutputStream(
-                        socketCliente.getOutputStream());
-
-                Object solicitudObject = is.readObject();
-
-                if (solicitudObject instanceof SolicitudDTO solicitudDTO) {
-                    solicitud = solicitudDTO.getSolicitud();
-                    Object objeto = solicitudDTO.getObjeto();
-                    String codigo = solicitudDTO.getCodigo();
-
-                    try {
-                        System.out.println("c1");
-                        if (solicitud.equals("CREAR_SALA") && objeto instanceof Sala) {
-                            T_Server.setSala((Sala) objeto);
-                            System.out.println("Sala creada con el código: " + sala.getCodigo());
-
-                        }
-                        System.out.println(codigo);
-                        System.out.println(solicitud);
-                        if (solicitud.equals("CODIGO_SALA") && codigo != null) {
-                            System.out.println(sala.toString());
-                            if (codigo.equalsIgnoreCase(sala.getCodigo())) {
-                                System.out.println("Código correcto!");
-                                os.writeBoolean(true);
-                                os.flush();
-
-                            } else {
-                                System.out.println("Código incorrecto");
-                                os.writeBoolean(false);
-                                os.flush();
-                            }
-                        }
-                        if (solicitud.equals("JALAR_SALA")) {
-                            os.writeObject(T_Server.getSala());
-                            os.flush();
-                        }
-                    } catch (NullPointerException e) {
-                        System.err.println("Error por nulo: " + e.getMessage());
-
-                    } catch (ClassCastException e) {
-                        System.err.println("Error al castear: " + e.getMessage());
-
-                    } catch (IOException e) {
-                        System.err.println("Error desconocido: " + e.getMessage());
-
-                    }
-                }
+                Thread clientThread = new Thread(new ClientHandler(clientSocket));
+                clientThread.start();
             }
-        } catch (IOException e) {
-            System.err.println("Ocurrió un error: " + e.getMessage());
+        } finally {
+            serverSocket.close();
         }
-
     }
 
+    static class ClientHandler implements Runnable {
+
+        private final Socket clientSocket;
+
+        ClientHandler(Socket socket) {
+            this.clientSocket = socket;
+        }
+
+        @Override
+        public void run() {
+            try {
+                while (true) {
+                    ObjectInputStream is = new ObjectInputStream(clientSocket.getInputStream());
+                    ObjectOutputStream os = new ObjectOutputStream(clientSocket.getOutputStream());
+
+                    System.out.println("nigga");
+
+                    Object solicitudObject = is.readObject();
+
+                    System.out.println(solicitudObject);
+
+                    if (solicitudObject instanceof SolicitudDTO) {
+                        String solicitud = ((SolicitudDTO) solicitudObject).getSolicitud();
+                        Object objeto = ((SolicitudDTO) solicitudObject).getObjeto();
+                        String codigo = ((SolicitudDTO) solicitudObject).getCodigo();
+
+                        System.out.println(solicitud);
+
+                        switch (solicitud) {
+                            case "CREAR_SALA":
+                                T_Server.setSala((Sala) objeto);
+                                System.out.println("Sala creada con el código: " + T_Server.getSala().getCodigo());
+                                break;
+                            case "CODIGO_SALA":
+                                System.out.println(codigo);
+                                if (codigo != null && codigo.equalsIgnoreCase(T_Server.getSala().getCodigo())) {
+                                    os.writeBoolean(true);
+                                    os.flush();
+                                    System.out.println("Código Correcto!!");
+                                } else {
+                                    os.writeBoolean(false);
+                                    os.flush();
+                                    System.out.println("Código Incorrecto :(");
+                                }
+                                os.flush();
+                                break;
+                            case "JALAR_SALA":
+                                os.writeObject(T_Server.getSala());
+                                System.out.println(T_Server.getSala().toString());
+                                os.flush();
+                                System.out.println("Sala jalada?");
+                                break;
+                            default:
+                                System.err.println("Solicitud desconocida: " + solicitud);
+                                break;
+                        }
+                    }
+                }
+            } catch (IOException | ClassNotFoundException e) {
+                System.err.println("Error en la conexión con el cliente: " + e.getMessage());
+            }
+        }
+    }
 }

@@ -51,7 +51,10 @@ public class ModelSala implements IModelSala {
     @Override
     public boolean unirseSala(String codigoSala) throws Exception {
         cliente = Cliente.getInstance();
+        System.out.println(cliente.mandarCodigo(codigoSala) + " MODEL SALA");
+        System.out.println("LLEGA AL MODELSALA");
         return cliente.mandarCodigo(codigoSala);
+
     }
 
     @Override

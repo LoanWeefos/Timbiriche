@@ -67,9 +67,12 @@ public class ViewModelSala implements IViewModelSala {
     public void unirseSala(String nombreJugador, String codigoSala) throws Exception {
         Jugador jugador = fachadaModel.crearJugador(nombreJugador);
         //Devolver sala creada
-        if (!fachadaModel.unirseSala(codigoSala)) {
+        System.out.println(fachadaModel.unirseSala(codigoSala)+" SI LLEGA AL VIEW MODEL");
+        if (fachadaModel.unirseSala(codigoSala)!= false) {
+            System.out.println("entro if sala");
             sala = fachadaModel.jalarSala();
             sala.setJugador2(jugador);
+            System.out.println("jala sala y setea jugador?");
             frmSala frame = frmSala.getInstance();
             frmMenu frameM = frmMenu.getInstance();
             frame.setNombre(nombreJugador);
