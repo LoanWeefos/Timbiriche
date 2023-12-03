@@ -15,4 +15,5 @@ public interface IModelSala {
     Sala crearSala(int cantidadJugadores) throws Exception;
     boolean unirseSala(String codigoSala) throws Exception;
     Sala jalarSala() throws Exception;
+    void mandarSala(Sala sala) throws Exception;
 }

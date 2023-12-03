@@ -51,7 +51,7 @@ public class ModelSala implements IModelSala {
     @Override
     public boolean unirseSala(String codigoSala) {
         try {
-            Cliente cliente = Cliente.getInstance();
+            cliente = Cliente.getInstance();
             boolean resultado = cliente.mandarCodigo(codigoSala); // Almacena el resultado
             System.out.println(resultado + " MODEL SALA");
             System.out.println("LLEGA AL MODELSALA");
@@ -66,5 +66,11 @@ public class ModelSala implements IModelSala {
     public Sala jalarSala() throws Exception {
         cliente = Cliente.getInstance();
         return cliente.jalarSala();
+    }
+    
+    @Override
+    public void mandarSala(Sala sala) throws Exception {
+        cliente = Cliente.getInstance();
+        cliente.mandarSala(sala);
     }
 }

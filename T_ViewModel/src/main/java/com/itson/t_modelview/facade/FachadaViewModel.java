@@ -16,7 +16,6 @@ import com.itson.dominio.Tablero;
 import com.itson.dominio.Juego;
 import com.itson.dominio.Sala;
 
-
 /**
  *
  * @author ildex
@@ -113,7 +112,7 @@ public final class FachadaViewModel implements IFachadaViewModel {
             throw new Exception(e.getMessage());
         }
     }
-    
+
     @Override
     public Cuadro[][] getCuadros() throws Exception {
         try {
@@ -130,5 +129,19 @@ public final class FachadaViewModel implements IFachadaViewModel {
         } catch (Exception e) {
             throw new Exception(e.getMessage());
         }
+    }
+
+    @Override
+    public boolean actualizarSala() throws Exception {
+        try {
+            return this.viewModelSala.actualizarSala();
+        } catch (Exception e) {
+            throw new Exception(e.getMessage());
+        }
+    }
+
+    @Override
+    public void actualizarDatosSala() {
+        this.viewModelSala.actualizarDatosSala();
     }
 }

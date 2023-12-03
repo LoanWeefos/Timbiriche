@@ -8,9 +8,11 @@ import com.itson.t_modelview.facade.FachadaViewModel;
 import com.itson.t_modelview.interfaces.IFachadaViewModel;
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
+import javax.swing.Timer;
 import javax.swing.UIManager;
 
 /**
@@ -19,13 +21,15 @@ import javax.swing.UIManager;
  */
 public class frmSala extends javax.swing.JFrame {
 
-    // Instancia única del Singleton
     private static frmSala instance = null;
     private static String codigo;
     private static String nombre;
     private static int cantJugadores;
     private String[] iconos;
+    
+    private String[][] jugadores;
     private int indice;
+    private Timer timer;
 
     private final IFachadaViewModel fachadaViewModel;
 
@@ -59,6 +63,17 @@ public class frmSala extends javax.swing.JFrame {
         initComponents();
         configurarPaneles();
         actualizarVentana();
+
+        timer = new Timer(1000, (ActionEvent e) -> {
+            try {
+                if(fachadaViewModel.actualizarSala()){
+                    fachadaViewModel.actualizarDatosSala();
+                }
+            } catch (Exception ex) {
+                Logger.getLogger(frmSala.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        });
+        timer.start();
     }
 
     // Método para obtener la instancia del Singleton
@@ -291,17 +306,14 @@ public class frmSala extends javax.swing.JFrame {
 
         lblJugador3.setFont(new java.awt.Font("Poppins SemiBold", 1, 18)); // NOI18N
         lblJugador3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblJugador3.setText("Wikiteban");
         lblJugador3.setPreferredSize(new java.awt.Dimension(100, 40));
 
         lblJugador2.setFont(new java.awt.Font("Poppins SemiBold", 1, 18)); // NOI18N
         lblJugador2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblJugador2.setText("LoanWeefos");
         lblJugador2.setPreferredSize(new java.awt.Dimension(100, 40));
 
         lblJugador4.setFont(new java.awt.Font("Poppins SemiBold", 1, 18)); // NOI18N
         lblJugador4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblJugador4.setText("Hugethekat");
         lblJugador4.setPreferredSize(new java.awt.Dimension(100, 40));
 
         javax.swing.GroupLayout pnlContenedorLayout = new javax.swing.GroupLayout(pnlContenedor);
@@ -465,6 +477,7 @@ public class frmSala extends javax.swing.JFrame {
         frmMenu frame = frmMenu.getInstance();
         frame.setVisible(true);
         dispose();
+        timer.stop();
     }//GEN-LAST:event_btnRegresarActionPerformed
 
     private void btnIzqActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIzqActionPerformed
@@ -611,7 +624,7 @@ public class frmSala extends javax.swing.JFrame {
     private javax.swing.JLabel lblIcon3;
     private javax.swing.JLabel lblIcon4;
     private javax.swing.JLabel lblIcono;
-    private javax.swing.JLabel lblJugador2;
+    public static javax.swing.JLabel lblJugador2;
     private javax.swing.JLabel lblJugador3;
     private javax.swing.JLabel lblJugador4;
     private javax.swing.JLabel lblLulu;

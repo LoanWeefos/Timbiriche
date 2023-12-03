@@ -26,4 +26,5 @@ public interface IFachadaModel {
     Jugador crearJugadores(String jugador) throws Exception;
     boolean unirseSala(String codigoSala) throws Exception;
     Sala jalarSala() throws Exception;
+    void mandarSala(Sala sala) throws Exception;
 }

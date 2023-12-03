@@ -108,4 +108,19 @@ public class Cliente {
         }
         return null;
     }
+    
+    public void mandarSala(Sala sala) {
+        String solicitud = "MANDAR_SALA";
+        try {
+            SolicitudDTO soli = new SolicitudDTO(solicitud, sala);
+            if (os != null) {
+                os.writeObject(soli);
+                os.flush();
+            } else {
+                System.err.println("Error con ObjectOutputStream no está inicializado correctamente.");
+            }
+        } catch (IOException e) {
+            System.err.println("Error al mandar la sala: " + e.getMessage());
+        }
+    }
 }

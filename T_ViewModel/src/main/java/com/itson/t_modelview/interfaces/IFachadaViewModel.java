@@ -29,4 +29,6 @@ public interface IFachadaViewModel {
     void asignarLineaACuadro(int fila, int columna, String orientacion, int turno) throws Exception;
     Juego crearJuego(String[][] jugadores) throws Exception;
     Cuadro[][] getCuadros() throws Exception;
+    boolean actualizarSala() throws Exception;
+    void actualizarDatosSala();
 }

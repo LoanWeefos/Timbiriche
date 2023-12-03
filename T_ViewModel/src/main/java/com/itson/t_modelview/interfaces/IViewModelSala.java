@@ -18,4 +18,6 @@ public interface IViewModelSala {
     void cambiarSalaMenu() throws Exception;
     void cambiarTablero(int cantJugadores, String[] iconos) throws Exception;
     void cambiarJuegoSala(JFrame tablero) throws Exception;
+    boolean actualizarSala() throws Exception;
+    void actualizarDatosSala();
 }

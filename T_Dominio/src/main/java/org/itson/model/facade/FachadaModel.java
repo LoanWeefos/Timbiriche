@@ -100,4 +100,14 @@ public class FachadaModel implements IFachadaModel {
 
         }
     }
+   
+    @Override
+    public void mandarSala(Sala sala) throws Exception {
+        try {
+            this.modelSala.mandarSala(sala);
+        } catch (Exception e) {
+            throw new Exception(e.getMessage());
+
+        }
+    }
 }

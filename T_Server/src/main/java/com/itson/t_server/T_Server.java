@@ -62,10 +62,10 @@ public class T_Server {
         @Override
         public void run() {
             try {
+                ObjectInputStream is = new ObjectInputStream(clientSocket.getInputStream());
+                ObjectOutputStream os = new ObjectOutputStream(clientSocket.getOutputStream());
                 while (true) {
-                    ObjectInputStream is = new ObjectInputStream(clientSocket.getInputStream());
-                    ObjectOutputStream os = new ObjectOutputStream(clientSocket.getOutputStream());
-                    
+
                     System.out.println("nigga");
 
                     Object solicitudObject = is.readObject();
@@ -95,13 +95,16 @@ public class T_Server {
                                     os.flush();
                                     System.out.println("Código Incorrecto :(");
                                 }
-                                os.flush();
                                 break;
                             case "JALAR_SALA":
-                                os.writeObject(T_Server.getSala());
+                                os.writeObject(sala);
                                 System.out.println(T_Server.getSala().toString());
                                 os.flush();
                                 System.out.println("Sala jalada?");
+                                break;
+                            case "MANDAR_SALA":
+                                T_Server.setSala((Sala) objeto);
+                                System.out.println("Sala mandada con el código: " + T_Server.getSala());
                                 break;
                             default:
                                 System.err.println("Solicitud desconocida: " + solicitud);

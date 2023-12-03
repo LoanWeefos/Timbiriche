@@ -381,7 +381,6 @@ public class frmMenu extends javax.swing.JFrame {
         String nombreJugador = txtUsuario.getText();
         String codigoSala = preguntarCodigoSala();
         fachadaViewModel.unirseSala(nombreJugador, codigoSala);
-
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -74,11 +74,13 @@ public class ViewModelSala implements IViewModelSala {
                 System.out.println("entro if sala");
                 sala = fachadaModel.jalarSala();
                 sala.setJugador2(jugador);
+                fachadaModel.mandarSala(sala);
                 System.out.println("jala sala y setea jugador?");
                 frmSala frame = frmSala.getInstance();
                 frmMenu frameM = frmMenu.getInstance();
                 frame.setNombre(nombreJugador);
                 frame.setCodigo(codigoSala.toUpperCase());
+                frame.setCantJugadores(sala.getCantidadJugadores());
                 frame.actualizarVentana();
                 frame.setVisible(true);
                 frameM.dispose();
@@ -141,6 +143,22 @@ public class ViewModelSala implements IViewModelSala {
             jugadores[i][1] = iconos[i];
         }
         return jugadores;
+    }
+
+    @Override
+    public boolean actualizarSala() throws Exception {
+        if (!sala.equals(fachadaModel.jalarSala())) {
+            sala = fachadaModel.jalarSala();
+            return true;
+        }
+        return false;
+    }
+
+    public void actualizarDatosSala() {
+        frmSala frame = frmSala.getInstance();
+        if (sala.getCantidadJugadores() == 2){
+            frmSala.lblJugador2.setText(sala.getJugador2().getNombre());
+        }
     }
 
 }
