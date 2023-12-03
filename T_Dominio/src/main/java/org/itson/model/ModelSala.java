@@ -49,12 +49,17 @@ public class ModelSala implements IModelSala {
     }
 
     @Override
-    public boolean unirseSala(String codigoSala) throws Exception {
-        cliente = Cliente.getInstance();
-        System.out.println(cliente.mandarCodigo(codigoSala) + " MODEL SALA");
-        System.out.println("LLEGA AL MODELSALA");
-        return cliente.mandarCodigo(codigoSala);
-
+    public boolean unirseSala(String codigoSala) {
+        try {
+            Cliente cliente = Cliente.getInstance();
+            boolean resultado = cliente.mandarCodigo(codigoSala); // Almacena el resultado
+            System.out.println(resultado + " MODEL SALA");
+            System.out.println("LLEGA AL MODELSALA");
+            return resultado; // Devuelve el resultado almacenado
+        } catch (Exception e) {
+            System.err.println("Error al intentar unirse a la sala: " + e.getMessage());
+            return false;
+        }
     }
 
     @Override

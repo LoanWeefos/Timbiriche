@@ -65,7 +65,7 @@ public class T_Server {
                 while (true) {
                     ObjectInputStream is = new ObjectInputStream(clientSocket.getInputStream());
                     ObjectOutputStream os = new ObjectOutputStream(clientSocket.getOutputStream());
-
+                    
                     System.out.println("nigga");
 
                     Object solicitudObject = is.readObject();

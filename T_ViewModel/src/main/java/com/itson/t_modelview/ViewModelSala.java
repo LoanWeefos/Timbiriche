@@ -64,23 +64,28 @@ public class ViewModelSala implements IViewModelSala {
     }
 
     @Override
-    public void unirseSala(String nombreJugador, String codigoSala) throws Exception {
-        Jugador jugador = fachadaModel.crearJugador(nombreJugador);
-        //Devolver sala creada
-        System.out.println(fachadaModel.unirseSala(codigoSala)+" SI LLEGA AL VIEW MODEL");
-        if (fachadaModel.unirseSala(codigoSala)!= false) {
-            System.out.println("entro if sala");
-            sala = fachadaModel.jalarSala();
-            sala.setJugador2(jugador);
-            System.out.println("jala sala y setea jugador?");
-            frmSala frame = frmSala.getInstance();
-            frmMenu frameM = frmMenu.getInstance();
-            frame.setNombre(nombreJugador);
-            frame.setCodigo(codigoSala.toUpperCase());
-            frame.actualizarVentana();
-            frame.setVisible(true);
-            frameM.dispose();
-            System.out.println(sala.toString());
+    public void unirseSala(String nombreJugador, String codigoSala) {
+        try {
+            System.out.println("VIEWMODEL 1");
+            Jugador jugador = fachadaModel.crearJugador(nombreJugador);
+            boolean seUnioASala = fachadaModel.unirseSala(codigoSala);
+            System.out.println(seUnioASala + " SI LLEGA AL VIEW MODEL");
+            if (seUnioASala) {
+                System.out.println("entro if sala");
+                sala = fachadaModel.jalarSala();
+                sala.setJugador2(jugador);
+                System.out.println("jala sala y setea jugador?");
+                frmSala frame = frmSala.getInstance();
+                frmMenu frameM = frmMenu.getInstance();
+                frame.setNombre(nombreJugador);
+                frame.setCodigo(codigoSala.toUpperCase());
+                frame.actualizarVentana();
+                frame.setVisible(true);
+                frameM.dispose();
+                System.out.println(sala.toString());
+            }
+        } catch (Exception e) {
+            System.err.println("Error al intentar unirse a la sala: " + e.getMessage());
         }
     }
 
