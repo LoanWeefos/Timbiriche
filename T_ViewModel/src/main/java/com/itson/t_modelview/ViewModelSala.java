@@ -25,6 +25,7 @@ public class ViewModelSala implements IViewModelSala {
     private static ViewModelSala viewModelSala;
     private final IFachadaModel fachadaModel;
     private Sala sala;
+    private Jugador jugador;
 
     public ViewModelSala() {
         this.fachadaModel = new FachadaModel();
@@ -45,7 +46,7 @@ public class ViewModelSala implements IViewModelSala {
     @Override
     public Sala crearSala(String nombreJugador, int cantidadJugadores) throws Exception {
         sala = Sala.getInstance();
-        Jugador jugador = fachadaModel.crearJugador(nombreJugador);
+        jugador = fachadaModel.crearJugador(nombreJugador);
         sala.setJugador(jugador);
         sala = fachadaModel.crearSala(cantidadJugadores);
         if (sala != null) {
@@ -67,7 +68,7 @@ public class ViewModelSala implements IViewModelSala {
     public void unirseSala(String nombreJugador, String codigoSala) {
         try {
             System.out.println("VIEWMODEL 1");
-            Jugador jugador = fachadaModel.crearJugador(nombreJugador);
+            jugador = fachadaModel.crearJugador(nombreJugador);
             boolean seUnioASala = fachadaModel.unirseSala(codigoSala);
             System.out.println(seUnioASala + " SI LLEGA AL VIEW MODEL");
             if (seUnioASala) {
@@ -156,9 +157,15 @@ public class ViewModelSala implements IViewModelSala {
 
     public void actualizarDatosSala() {
         frmSala frame = frmSala.getInstance();
-        if (sala.getCantidadJugadores() == 2){
-            frmSala.lblJugador2.setText(sala.getJugador2().getNombre());
+        Jugador j1 = sala.getJugador();
+        Jugador j2 = sala.getJugador2();
+        if (jugador.equals(j1) && j2 != null) {
+            frame.setJugador2(j2.getNombre());
+        } else if (jugador.equals(j2)) {
+            frame.setJugador2(j1.getNombre());
+            frame.configurarJugador2();
         }
+        frame.actualizarVentana();
     }
 
 }

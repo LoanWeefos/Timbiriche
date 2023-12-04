@@ -90,7 +90,6 @@ public class Cliente {
         String solicitud = "JALAR_SALA";
         try {
             SolicitudDTO soli = new SolicitudDTO(solicitud);
-            System.out.println(soli);
             if (os != null) {
                 os.writeObject(soli);
                 os.flush();

@@ -26,36 +26,14 @@ public class frmSala extends javax.swing.JFrame {
     private static String nombre;
     private static int cantJugadores;
     private String[] iconos;
-    
-    private String[][] jugadores;
+    private String jugador2;
+    private String jugador3;
+    private String jugador4;
+
     private int indice;
     private Timer timer;
 
     private final IFachadaViewModel fachadaViewModel;
-
-    public static String getCodigo() {
-        return codigo;
-    }
-
-    public static void setCodigo(String aCodigo) {
-        codigo = aCodigo;
-    }
-
-    public static String getNombre() {
-        return nombre;
-    }
-
-    public static void setNombre(String aNombre) {
-        nombre = aNombre;
-    }
-
-    public static int getCantJugadores() {
-        return cantJugadores;
-    }
-
-    public static void setCantJugadores(int aCantJugadores) {
-        cantJugadores = aCantJugadores;
-    }
 
     // Constructor privado para evitar instanciación directa
     private frmSala() {
@@ -66,8 +44,9 @@ public class frmSala extends javax.swing.JFrame {
 
         timer = new Timer(1000, (ActionEvent e) -> {
             try {
-                if(fachadaViewModel.actualizarSala()){
+                if (fachadaViewModel.actualizarSala()) {
                     fachadaViewModel.actualizarDatosSala();
+                    actualizarVentana();
                 }
             } catch (Exception ex) {
                 Logger.getLogger(frmSala.class.getName()).log(Level.SEVERE, null, ex);
@@ -546,12 +525,20 @@ public class frmSala extends javax.swing.JFrame {
 
     private void colocarNombre() {
         lblUsuario.setText(nombre);
+        lblJugador2.setText(jugador2);
+        System.out.println(jugador2);
     }
 
     public void actualizarVentana() {
         nombrarSala();
         colocarNombre();
         colocarJugadores();
+    }
+    
+    public void configurarJugador2() {
+        btnIniciar.setEnabled(false);
+        pnlIcon1.setBackground(Color.decode("#30B856"));
+        pnlIcon2.setBackground(Color.decode("#B13A3A"));
     }
 
     public void colocarJugadores() {
@@ -611,6 +598,31 @@ public class frmSala extends javax.swing.JFrame {
     private String[] obtenerImagenes() {
         return new String[]{"lulu.png", "lulu2.png", "tyrael.png", "tyrael2.png"};
     }
+    
+    public static String getCodigo() {
+        return codigo;
+    }
+
+    public static void setCodigo(String aCodigo) {
+        codigo = aCodigo;
+    }
+
+    public static String getNombre() {
+        return nombre;
+    }
+
+    public static void setNombre(String aNombre) {
+        nombre = aNombre;
+    }
+
+    public static int getCantJugadores() {
+        return cantJugadores;
+    }
+
+    public static void setCantJugadores(int aCantJugadores) {
+        cantJugadores = aCantJugadores;
+    }
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnDer;
@@ -624,7 +636,7 @@ public class frmSala extends javax.swing.JFrame {
     private javax.swing.JLabel lblIcon3;
     private javax.swing.JLabel lblIcon4;
     private javax.swing.JLabel lblIcono;
-    public static javax.swing.JLabel lblJugador2;
+    private javax.swing.JLabel lblJugador2;
     private javax.swing.JLabel lblJugador3;
     private javax.swing.JLabel lblJugador4;
     private javax.swing.JLabel lblLulu;
@@ -639,4 +651,28 @@ public class frmSala extends javax.swing.JFrame {
     private javax.swing.JPanel pnlIcon4;
     private javax.swing.JPanel pnlSala;
     // End of variables declaration//GEN-END:variables
+
+    public String getJugador2() {
+        return jugador2;
+    }
+
+    public void setJugador2(String jugador2) {
+        this.jugador2 = jugador2;
+    }
+
+    public String getJugador3() {
+        return jugador3;
+    }
+
+    public void setJugador3(String jugador3) {
+        this.jugador3 = jugador3;
+    }
+
+    public String getJugador4() {
+        return jugador4;
+    }
+
+    public void setJugador4(String jugador4) {
+        this.jugador4 = jugador4;
+    }
 }

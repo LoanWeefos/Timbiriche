@@ -66,18 +66,12 @@ public class T_Server {
                 ObjectOutputStream os = new ObjectOutputStream(clientSocket.getOutputStream());
                 while (true) {
 
-                    System.out.println("nigga");
-
                     Object solicitudObject = is.readObject();
-
-                    System.out.println(solicitudObject);
 
                     if (solicitudObject instanceof SolicitudDTO) {
                         String solicitud = ((SolicitudDTO) solicitudObject).getSolicitud();
                         Object objeto = ((SolicitudDTO) solicitudObject).getObjeto();
                         String codigo = ((SolicitudDTO) solicitudObject).getCodigo();
-
-                        System.out.println(solicitud);
 
                         switch (solicitud) {
                             case "CREAR_SALA":
@@ -98,9 +92,7 @@ public class T_Server {
                                 break;
                             case "JALAR_SALA":
                                 os.writeObject(sala);
-                                System.out.println(T_Server.getSala().toString());
                                 os.flush();
-                                System.out.println("Sala jalada?");
                                 break;
                             case "MANDAR_SALA":
                                 T_Server.setSala((Sala) objeto);
