@@ -8,6 +8,8 @@ import com.itson.t_modelview.interfaces.IViewModelSala;
 import javax.swing.JFrame;
 import com.itson.dominio.Jugador;
 import com.itson.dominio.Sala;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.itson.model.facade.FachadaModel;
 import org.itson.model.interfaces.IFachadaModel;
 import org.itson.t_views.frmJuego10x10;
@@ -155,6 +157,7 @@ public class ViewModelSala implements IViewModelSala {
         return false;
     }
 
+    @Override
     public void actualizarDatosSala() {
         frmSala frame = frmSala.getInstance();
         Jugador j1 = sala.getJugador();
@@ -168,4 +171,43 @@ public class ViewModelSala implements IViewModelSala {
         frame.actualizarVentana();
     }
 
+    @Override
+    public void actualizarAvatar(String avatar) throws Exception {
+        Jugador j1 = sala.getJugador();
+        Jugador j2 = sala.getJugador2();
+        if (jugador.equals(j1) && j2 != null) {
+            jugador.setAvatar(avatar);
+            sala.setJugador(jugador);
+            fachadaModel.mandarSala(sala);
+        } else if (jugador.equals(j2)) {
+            jugador.setAvatar(avatar);
+            System.out.println(jugador + " JUGADOR ACUTALIZAR AVATAR");
+            System.out.println(avatar + "AVATAR DEL ACTYUALIZATR AVATAR");
+            sala.setJugador2(jugador);
+            fachadaModel.mandarSala(sala);
+            System.out.println(fachadaModel.jalarSala()+" SALA ACTUALIZAR PT 1 DESPUES DE MANDAR");
+            System.out.println(sala + " SALA DEL ACTUALIZAR AVATAR");
+        }
+    }
+
+    @Override
+    public void actualizarIcono() {
+        frmSala frame = frmSala.getInstance();
+        try {
+            sala = fachadaModel.jalarSala();
+            Jugador j1 = sala.getJugador();
+            Jugador j2 = sala.getJugador2();
+            System.out.println(sala + " SALA ICONO?");
+            if (jugador.equals(j1) && j2 != null) {
+                frame.setIcono2(j2.getAvatar());
+            } else if (jugador.equals(j2)) {
+                frame.setIcono2(j1.getAvatar());
+                frame.configurarJugador2();
+            }
+            frame.actualizarVentana();
+        } catch (Exception ex) {
+            Logger.getLogger(ViewModelSala.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
 }

@@ -144,4 +144,14 @@ public final class FachadaViewModel implements IFachadaViewModel {
     public void actualizarDatosSala() {
         this.viewModelSala.actualizarDatosSala();
     }
+    
+    @Override
+    public void actualizarAvatar(String avatar) throws Exception{
+        this.viewModelSala.actualizarAvatar(avatar);
+    }
+    
+    @Override
+    public void actualizarIcono(){
+        this.viewModelSala.actualizarIcono();
+    }
 }

@@ -29,6 +29,9 @@ public class frmSala extends javax.swing.JFrame {
     private String jugador2;
     private String jugador3;
     private String jugador4;
+    private String icono2;
+    private String icono3;
+    private String icono4;
 
     private int indice;
     private Timer timer;
@@ -46,6 +49,7 @@ public class frmSala extends javax.swing.JFrame {
             try {
                 if (fachadaViewModel.actualizarSala()) {
                     fachadaViewModel.actualizarDatosSala();
+                    fachadaViewModel.actualizarIcono();
                     actualizarVentana();
                 }
             } catch (Exception ex) {
@@ -61,6 +65,11 @@ public class frmSala extends javax.swing.JFrame {
             instance = new frmSala();
         }
         return instance;
+    }
+
+    public void mandarAvatar(String avatar) throws Exception {
+        fachadaViewModel.actualizarAvatar(avatar);
+
     }
 
     /**
@@ -462,11 +471,24 @@ public class frmSala extends javax.swing.JFrame {
     private void btnIzqActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIzqActionPerformed
         indice--;
         mostrarImagen();
+        String url = obtenerNombreImagen(lblIcon1);
+        try {
+            mandarAvatar(url);
+            System.out.println(url+" frame");
+        } catch (Exception ex) {
+            Logger.getLogger(frmSala.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_btnIzqActionPerformed
 
     private void btnDerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDerActionPerformed
         indice++;
         mostrarImagen();
+        String url = obtenerNombreImagen(lblIcon1);
+        try {
+            mandarAvatar(url);
+        } catch (Exception ex) {
+            Logger.getLogger(frmSala.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_btnDerActionPerformed
 
     private void btnIniciarMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnIniciarMousePressed
@@ -526,7 +548,7 @@ public class frmSala extends javax.swing.JFrame {
     private void colocarNombre() {
         lblUsuario.setText(nombre);
         lblJugador2.setText(jugador2);
-        System.out.println(jugador2);
+        //System.out.println(jugador2);
     }
 
     public void actualizarVentana() {
@@ -534,11 +556,16 @@ public class frmSala extends javax.swing.JFrame {
         colocarNombre();
         colocarJugadores();
     }
-    
+
     public void configurarJugador2() {
         btnIniciar.setEnabled(false);
         pnlIcon1.setBackground(Color.decode("#30B856"));
         pnlIcon2.setBackground(Color.decode("#B13A3A"));
+        System.out.println(icono2);
+        if (icono2 != null) {
+            System.out.println(icono2);
+            lblIcon2.setIcon(new ImageIcon(getClass().getClassLoader().getResource(icono2)));
+        }
     }
 
     public void colocarJugadores() {
@@ -598,7 +625,7 @@ public class frmSala extends javax.swing.JFrame {
     private String[] obtenerImagenes() {
         return new String[]{"lulu.png", "lulu2.png", "tyrael.png", "tyrael2.png"};
     }
-    
+
     public static String getCodigo() {
         return codigo;
     }
@@ -675,4 +702,29 @@ public class frmSala extends javax.swing.JFrame {
     public void setJugador4(String jugador4) {
         this.jugador4 = jugador4;
     }
+
+    public String getIcono2() {
+        return icono2;
+    }
+
+    public void setIcono2(String icono2) {
+        this.icono2 = icono2;
+    }
+
+    public String getIcono3() {
+        return icono3;
+    }
+
+    public void setIcono3(String icono3) {
+        this.icono3 = icono3;
+    }
+
+    public String getIcono4() {
+        return icono4;
+    }
+
+    public void setIcono4(String icono4) {
+        this.icono4 = icono4;
+    }
+
 }

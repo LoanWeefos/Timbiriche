@@ -31,4 +31,6 @@ public interface IFachadaViewModel {
     Cuadro[][] getCuadros() throws Exception;
     boolean actualizarSala() throws Exception;
     void actualizarDatosSala();
+    void actualizarAvatar(String avatar) throws Exception;
+    void actualizarIcono();
 }
