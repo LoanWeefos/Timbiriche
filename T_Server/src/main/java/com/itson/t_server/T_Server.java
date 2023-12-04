@@ -4,6 +4,7 @@
 package com.itson.t_server;
 
 import com.itson.compartidos.SolicitudDTO;
+import com.itson.dominio.Jugador;
 import com.itson.dominio.Sala;
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -91,12 +92,26 @@ public class T_Server {
                                 }
                                 break;
                             case "JALAR_SALA":
-                                os.writeObject(sala);
+                                System.out.println(T_Server.getSala() + " jalada");
+                                os.writeObject(T_Server.getSala());
                                 os.flush();
                                 break;
                             case "MANDAR_SALA":
+                                System.out.println(objeto);
                                 T_Server.setSala((Sala) objeto);
                                 System.out.println("Sala mandada con el código: " + T_Server.getSala());
+                                break;
+                            case "ACTUALIZAR_JUGADOR":
+                                Jugador j1 = sala.getJugador();
+                                Jugador j2 = sala.getJugador2();
+                                Jugador jugador = (Jugador) objeto;
+                                if (jugador.equals(j1) && j2 != null) {
+                                    jugador.setAvatar(codigo);
+                                    sala.setJugador(jugador);
+                                } else if (jugador.equals(j2)) {
+                                    jugador.setAvatar(codigo);
+                                    sala.setJugador2(jugador);
+                                }
                                 break;
                             default:
                                 System.err.println("Solicitud desconocida: " + solicitud);

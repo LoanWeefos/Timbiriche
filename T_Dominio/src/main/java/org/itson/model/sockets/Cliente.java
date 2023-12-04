@@ -5,6 +5,7 @@
 package org.itson.model.sockets;
 
 import com.itson.compartidos.SolicitudDTO;
+import com.itson.dominio.Jugador;
 import com.itson.dominio.Sala;
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -107,11 +108,26 @@ public class Cliente {
         }
         return null;
     }
-    
+
     public void mandarSala(Sala sala) {
         String solicitud = "MANDAR_SALA";
         try {
             SolicitudDTO soli = new SolicitudDTO(solicitud, sala);
+            if (os != null) {
+                os.writeObject(soli);
+                os.flush();
+            } else {
+                System.err.println("Error con ObjectOutputStream no está inicializado correctamente.");
+            }
+        } catch (IOException e) {
+            System.err.println("Error al mandar la sala: " + e.getMessage());
+        }
+    }
+
+    public void actualizarJugador(Jugador jugador, String avatar) {
+        String solicitud = "ACTUALIZAR_JUGADOR";
+        try {
+            SolicitudDTO soli = new SolicitudDTO(solicitud, jugador, avatar);
             if (os != null) {
                 os.writeObject(soli);
                 os.flush();

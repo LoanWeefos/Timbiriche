@@ -110,4 +110,13 @@ public class FachadaModel implements IFachadaModel {
 
         }
     }
+
+    @Override
+    public void actualizarJugador(Jugador jugador, String avatar) throws Exception{
+        try {
+            this.modelSala.actualizarJugador(jugador, avatar);
+        } catch (Exception e) {
+            throw new Exception(e.getMessage());
+        }
+    }
 }

@@ -150,8 +150,10 @@ public class ViewModelSala implements IViewModelSala {
 
     @Override
     public boolean actualizarSala() throws Exception {
+        System.out.println(fachadaModel.jalarSala());
         if (!sala.equals(fachadaModel.jalarSala())) {
             sala = fachadaModel.jalarSala();
+            System.out.println(sala);
             return true;
         }
         return false;
@@ -173,31 +175,15 @@ public class ViewModelSala implements IViewModelSala {
 
     @Override
     public void actualizarAvatar(String avatar) throws Exception {
-        Jugador j1 = sala.getJugador();
-        Jugador j2 = sala.getJugador2();
-        if (jugador.equals(j1) && j2 != null) {
-            jugador.setAvatar(avatar);
-            sala.setJugador(jugador);
-            fachadaModel.mandarSala(sala);
-        } else if (jugador.equals(j2)) {
-            jugador.setAvatar(avatar);
-            System.out.println(jugador + " JUGADOR ACUTALIZAR AVATAR");
-            System.out.println(avatar + "AVATAR DEL ACTYUALIZATR AVATAR");
-            sala.setJugador2(jugador);
-            fachadaModel.mandarSala(sala);
-            System.out.println(fachadaModel.jalarSala()+" SALA ACTUALIZAR PT 1 DESPUES DE MANDAR");
-            System.out.println(sala + " SALA DEL ACTUALIZAR AVATAR");
-        }
+        fachadaModel.actualizarJugador(jugador, avatar);
     }
 
     @Override
     public void actualizarIcono() {
         frmSala frame = frmSala.getInstance();
         try {
-            sala = fachadaModel.jalarSala();
             Jugador j1 = sala.getJugador();
             Jugador j2 = sala.getJugador2();
-            System.out.println(sala + " SALA ICONO?");
             if (jugador.equals(j1) && j2 != null) {
                 frame.setIcono2(j2.getAvatar());
             } else if (jugador.equals(j2)) {

@@ -4,6 +4,7 @@
  */
 package org.itson.model;
 
+import com.itson.dominio.Jugador;
 import org.apache.commons.lang3.RandomStringUtils;
 //import org.itson.dominio.Sala;
 import com.itson.dominio.Sala;
@@ -67,10 +68,16 @@ public class ModelSala implements IModelSala {
         cliente = Cliente.getInstance();
         return cliente.jalarSala();
     }
-    
+
     @Override
     public void mandarSala(Sala sala) throws Exception {
         cliente = Cliente.getInstance();
         cliente.mandarSala(sala);
+    }
+
+    @Override
+    public void actualizarJugador(Jugador jugador, String avatar) {
+        cliente = Cliente.getInstance();
+        cliente.actualizarJugador(jugador, avatar);
     }
 }

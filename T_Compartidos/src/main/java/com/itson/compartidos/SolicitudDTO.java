@@ -34,6 +34,12 @@ public class SolicitudDTO implements Serializable {
         this.codigo = codigo;
     }
 
+    public SolicitudDTO(String solicitud, Object objeto, String codigo) {
+        this.solicitud = solicitud;
+        this.objeto = objeto;
+        this.codigo = codigo;
+    }
+
     public SolicitudDTO(String solicitud) {
         this.solicitud = solicitud;
     }

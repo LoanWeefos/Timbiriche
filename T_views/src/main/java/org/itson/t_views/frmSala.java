@@ -548,7 +548,6 @@ public class frmSala extends javax.swing.JFrame {
     private void colocarNombre() {
         lblUsuario.setText(nombre);
         lblJugador2.setText(jugador2);
-        //System.out.println(jugador2);
     }
 
     public void actualizarVentana() {

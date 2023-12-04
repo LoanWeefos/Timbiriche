@@ -5,6 +5,7 @@
 package org.itson.model.interfaces;
 
 //import org.itson.dominio.Sala;
+import com.itson.dominio.Jugador;
 import com.itson.dominio.Sala;
 
 /**
@@ -16,4 +17,5 @@ public interface IModelSala {
     boolean unirseSala(String codigoSala) throws Exception;
     Sala jalarSala() throws Exception;
     void mandarSala(Sala sala) throws Exception;
+    void actualizarJugador(Jugador jugador, String avatar);
 }
