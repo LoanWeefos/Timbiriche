@@ -27,11 +27,11 @@ public class T_Server {
     private static final int PORT = 6942;
     private static Sala sala;
 
-    public static Sala getSala() {
+    public static synchronized Sala getSala() {
         return sala;
     }
 
-    public static void setSala(Sala sala) {
+    public static synchronized void setSala(Sala sala) {
         T_Server.sala = sala;
     }
 
@@ -92,25 +92,28 @@ public class T_Server {
                                 }
                                 break;
                             case "JALAR_SALA":
-                                System.out.println(T_Server.getSala() + " jalada");
-                                os.writeObject(T_Server.getSala());
-                                os.flush();
+                                 synchronized (T_Server.class) {
+                                    os.writeObject(T_Server.getSala());
+                                    os.flush();
+                                }
                                 break;
                             case "MANDAR_SALA":
-                                System.out.println(objeto);
                                 T_Server.setSala((Sala) objeto);
                                 System.out.println("Sala mandada con el código: " + T_Server.getSala());
                                 break;
                             case "ACTUALIZAR_JUGADOR":
+                                Sala sala = T_Server.getSala();
                                 Jugador j1 = sala.getJugador();
                                 Jugador j2 = sala.getJugador2();
                                 Jugador jugador = (Jugador) objeto;
                                 if (jugador.equals(j1) && j2 != null) {
                                     jugador.setAvatar(codigo);
                                     sala.setJugador(jugador);
+                                    T_Server.setSala(sala);
                                 } else if (jugador.equals(j2)) {
                                     jugador.setAvatar(codigo);
                                     sala.setJugador2(jugador);
+                                    T_Server.setSala(sala);
                                 }
                                 break;
                             default:

@@ -34,6 +34,7 @@ public class Jugador implements Serializable {
     public Jugador(String nombre) {
         this.id = generarIdAleatorio();
         this.nombre = nombre;
+        this.avatar = "";
     }
 
     private int generarIdAleatorio() {

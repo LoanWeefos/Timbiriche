@@ -96,8 +96,9 @@ public class Cliente {
                 os.flush();
 
                 Object sala = is.readObject();
+                System.out.println(sala);
 
-                if (sala instanceof Object) {
+                if (sala instanceof Sala) {
                     return (Sala) sala;
                 } else {
                     System.err.println("Error: La respuesta del servidor no es sala.");

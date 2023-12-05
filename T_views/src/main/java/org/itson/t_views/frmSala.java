@@ -45,18 +45,10 @@ public class frmSala extends javax.swing.JFrame {
         configurarPaneles();
         actualizarVentana();
 
-        timer = new Timer(1000, (ActionEvent e) -> {
-            try {
-                if (fachadaViewModel.actualizarSala()) {
-                    fachadaViewModel.actualizarDatosSala();
-                    fachadaViewModel.actualizarIcono();
-                    actualizarVentana();
-                }
-            } catch (Exception ex) {
-                Logger.getLogger(frmSala.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        });
-        timer.start();
+//        timer = new Timer(1000, (ActionEvent e) -> {
+//
+//        });
+//        timer.start();
     }
 
     // Método para obtener la instancia del Singleton
@@ -109,6 +101,11 @@ public class frmSala extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
+        addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseMoved(java.awt.event.MouseEvent evt) {
+                formMouseMoved(evt);
+            }
+        });
 
         pnlSala.setBackground(new java.awt.Color(216, 227, 242));
         pnlSala.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 5));
@@ -180,7 +177,7 @@ public class frmSala extends javax.swing.JFrame {
         pnlIcon2.setBackground(new java.awt.Color(48, 184, 86));
 
         lblIcon2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblIcon2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/lulu2.png"))); // NOI18N
+        lblIcon2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tyrael.png"))); // NOI18N
 
         javax.swing.GroupLayout pnlIcon2Layout = new javax.swing.GroupLayout(pnlIcon2);
         pnlIcon2.setLayout(pnlIcon2Layout);
@@ -474,7 +471,7 @@ public class frmSala extends javax.swing.JFrame {
         String url = obtenerNombreImagen(lblIcon1);
         try {
             mandarAvatar(url);
-            System.out.println(url+" frame");
+            System.out.println(url + " frame");
         } catch (Exception ex) {
             Logger.getLogger(frmSala.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -530,6 +527,18 @@ public class frmSala extends javax.swing.JFrame {
         btnIzq.setBackground(new Color(217, 203, 191));
     }//GEN-LAST:event_btnIzqMouseReleased
 
+    private void formMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseMoved
+        try {
+            if (fachadaViewModel.actualizarSala()) {
+                fachadaViewModel.actualizarDatosSala();
+                fachadaViewModel.actualizarIcono();
+                actualizarVentana();
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(frmSala.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_formMouseMoved
+
     private void configurarPaneles() {
         UIManager UI = new UIManager();
         UI.put("Panel.background", Color.decode("#59493F"));
@@ -560,14 +569,10 @@ public class frmSala extends javax.swing.JFrame {
         btnIniciar.setEnabled(false);
         pnlIcon1.setBackground(Color.decode("#30B856"));
         pnlIcon2.setBackground(Color.decode("#B13A3A"));
-        System.out.println(icono2);
-        if (icono2 != null) {
-            System.out.println(icono2);
-            lblIcon2.setIcon(new ImageIcon(getClass().getClassLoader().getResource(icono2)));
-        }
     }
 
     public void colocarJugadores() {
+        lblIcon2.setIcon(new ImageIcon(getClass().getClassLoader().getResource(icono2)));
         lblIcon3.setVisible(cantJugadores > 2);
         pnlIcon3.setVisible(cantJugadores > 2);
         lblJugador3.setVisible(cantJugadores > 2);

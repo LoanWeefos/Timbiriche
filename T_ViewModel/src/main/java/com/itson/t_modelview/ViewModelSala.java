@@ -47,6 +47,7 @@ public class ViewModelSala implements IViewModelSala {
 
     @Override
     public Sala crearSala(String nombreJugador, int cantidadJugadores) throws Exception {
+        System.out.println("epale");
         sala = Sala.getInstance();
         jugador = fachadaModel.crearJugador(nombreJugador);
         sala.setJugador(jugador);
@@ -176,6 +177,7 @@ public class ViewModelSala implements IViewModelSala {
     @Override
     public void actualizarAvatar(String avatar) throws Exception {
         fachadaModel.actualizarJugador(jugador, avatar);
+        jugador.setAvatar(avatar);
     }
 
     @Override
