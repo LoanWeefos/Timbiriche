@@ -84,8 +84,8 @@ public class ViewModelSala implements IViewModelSala {
                 frame.setNombre(nombreJugador);
                 frame.setCodigo(codigoSala.toUpperCase());
                 frame.setCantJugadores(sala.getCantidadJugadores());
-                frame.actualizarVentana();
                 frame.setVisible(true);
+                frame.actualizarVentana();
                 frameM.dispose();
                 System.out.println(sala.toString());
             }
@@ -150,11 +150,13 @@ public class ViewModelSala implements IViewModelSala {
 
     @Override
     public boolean actualizarSala() throws Exception {
-        System.out.println(fachadaModel.jalarSala());
+        System.out.println(sala+"SALA A COMPARAR");
+        System.out.println(fachadaModel.jalarSala() + "sala jala antes actualizar");
         if (!sala.equals(fachadaModel.jalarSala())) {
             sala = fachadaModel.jalarSala();
-            System.out.println(sala);
+            System.out.println(sala + "Sala jalada actualizar");
             return true;
+        } else {
         }
         return false;
     }

@@ -19,7 +19,7 @@ import javax.swing.UIManager;
  *
  * @author Equipo6
  */
-public class frmSala extends javax.swing.JFrame {
+public final class frmSala extends javax.swing.JFrame {
 
     private static frmSala instance = null;
     private static String codigo;
@@ -45,12 +45,11 @@ public class frmSala extends javax.swing.JFrame {
         configurarPaneles();
         actualizarVentana();
 
-        timer = new Timer(1000, (ActionEvent e) -> {
+        timer = new Timer(5000, (ActionEvent e) -> {
             try {
                 if (fachadaViewModel.actualizarSala()) {
-                    fachadaViewModel.actualizarDatosSala();
                     fachadaViewModel.actualizarIcono();
-                    actualizarVentana();
+                    fachadaViewModel.actualizarDatosSala();
                 }
             } catch (Exception ex) {
                 Logger.getLogger(frmSala.class.getName()).log(Level.SEVERE, null, ex);
@@ -474,7 +473,7 @@ public class frmSala extends javax.swing.JFrame {
         String url = obtenerNombreImagen(lblIcon1);
         try {
             mandarAvatar(url);
-            System.out.println(url+" frame");
+            System.out.println(url + " frame");
         } catch (Exception ex) {
             Logger.getLogger(frmSala.class.getName()).log(Level.SEVERE, null, ex);
         }

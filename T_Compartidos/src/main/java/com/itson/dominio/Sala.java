@@ -5,6 +5,7 @@
 package com.itson.dominio;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 /**
  *
@@ -87,6 +88,12 @@ public class Sala implements Serializable {
 
     public void setJugador4(Jugador jugador4) {
         this.jugador4 = jugador4;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        return hash;
     }
 
     @Override

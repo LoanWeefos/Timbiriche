@@ -107,10 +107,15 @@ public class T_Server {
                                 Jugador jugador = (Jugador) objeto;
                                 if (jugador.equals(j1) && j2 != null) {
                                     jugador.setAvatar(codigo);
+                                    int i = 1 + 1;
+                                    jugador.setPuntaje(i);
                                     sala.setJugador(jugador);
                                 } else if (jugador.equals(j2)) {
                                     jugador.setAvatar(codigo);
+                                    int i = 1 + 1;
+                                    jugador.setPuntaje(i);
                                     sala.setJugador2(jugador);
+
                                 }
                                 break;
                             default:
